@@ -1,0 +1,37 @@
+\documentclass[
+class = book,
+zihao = -4,
+font = noto,
+paper = a4paper,
+openany
+]{easybook}
+
+\input{settings}
+\lstset{
+	style=mystyle,
+	escapeinside={(*@}{@*)} % 允许在代码中使用 LaTeX 命令
+}
+
+\begin{document}
+	\title{\Name\ \Version \\ 使用说明}
+%	\author{高旭帆}
+	\date{\today}
+	
+	\frontmatter[roman]
+	\maketitle
+	\tableofcontents
+	
+	\mainmatter*
+	
+	\input{1-introduction.tex}
+	\input{2-installation.tex}
+	\input{3-usage}
+	\input{4-single.tex}
+	\input{5-compare.tex}
+	\input{6-modeling.tex}
+	
+	\newpage
+	
+	\backmatter
+	%\printbibliography[book,multoc = false]
+\end{document}

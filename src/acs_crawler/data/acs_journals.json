@@ -1,0 +1,262 @@
+{
+  "journals": [
+    {
+      "name": "Journal of the American Chemical Society",
+      "code": "jacsat",
+      "url": "https://pubs.acs.org/toc/jacsat/current",
+      "abbreviation": "J. Am. Chem. Soc."
+    },
+    {
+      "name": "Journal of Medicinal Chemistry",
+      "code": "jmcmar",
+      "url": "https://pubs.acs.org/toc/jmcmar/current",
+      "abbreviation": "J. Med. Chem."
+    },
+    {
+      "name": "Journal of Chemical Theory and Computation",
+      "code": "jctcce",
+      "url": "https://pubs.acs.org/toc/jctcce/current",
+      "abbreviation": "J. Chem. Theory Comput."
+    },
+    {
+      "name": "ACS Nano",
+      "code": "ancac3",
+      "url": "https://pubs.acs.org/toc/ancac3/current",
+      "abbreviation": "ACS Nano"
+    },
+    {
+      "name": "ACS Catalysis",
+      "code": "accacs",
+      "url": "https://pubs.acs.org/toc/accacs/current",
+      "abbreviation": "ACS Catal."
+    },
+    {
+      "name": "ACS Central Science",
+      "code": "acscii",
+      "url": "https://pubs.acs.org/toc/acscii/current",
+      "abbreviation": "ACS Cent. Sci."
+    },
+    {
+      "name": "ACS Omega",
+      "code": "acsodf",
+      "url": "https://pubs.acs.org/toc/acsodf/current",
+      "abbreviation": "ACS Omega"
+    },
+    {
+      "name": "Nano Letters",
+      "code": "nalefd",
+      "url": "https://pubs.acs.org/toc/nalefd/current",
+      "abbreviation": "Nano Lett."
+    },
+    {
+      "name": "Organic Letters",
+      "code": "orlef7",
+      "url": "https://pubs.acs.org/toc/orlef7/current",
+      "abbreviation": "Org. Lett."
+    },
+    {
+      "name": "The Journal of Organic Chemistry",
+      "code": "joceah",
+      "url": "https://pubs.acs.org/toc/joceah/current",
+      "abbreviation": "J. Org. Chem."
+    },
+    {
+      "name": "The Journal of Physical Chemistry A",
+      "code": "jpcafh",
+      "url": "https://pubs.acs.org/toc/jpcafh/current",
+      "abbreviation": "J. Phys. Chem. A"
+    },
+    {
+      "name": "The Journal of Physical Chemistry B",
+      "code": "jpcbfk",
+      "url": "https://pubs.acs.org/toc/jpcbfk/current",
+      "abbreviation": "J. Phys. Chem. B"
+    },
+    {
+      "name": "The Journal of Physical Chemistry C",
+      "code": "jpccck",
+      "url": "https://pubs.acs.org/toc/jpccck/current",
+      "abbreviation": "J. Phys. Chem. C"
+    },
+    {
+      "name": "Chemistry of Materials",
+      "code": "cmatex",
+      "url": "https://pubs.acs.org/toc/cmatex/current",
+      "abbreviation": "Chem. Mater."
+    },
+    {
+      "name": "Biochemistry",
+      "code": "bichaw",
+      "url": "https://pubs.acs.org/toc/bichaw/current",
+      "abbreviation": "Biochemistry"
+    },
+    {
+      "name": "Analytical Chemistry",
+      "code": "ancham",
+      "url": "https://pubs.acs.org/toc/ancham/current",
+      "abbreviation": "Anal. Chem."
+    },
+    {
+      "name": "Environmental Science & Technology",
+      "code": "esthag",
+      "url": "https://pubs.acs.org/toc/esthag/current",
+      "abbreviation": "Environ. Sci. Technol."
+    },
+    {
+      "name": "Langmuir",
+      "code": "langd5",
+      "url": "https://pubs.acs.org/toc/langd5/current",
+      "abbreviation": "Langmuir"
+    },
+    {
+      "name": "Macromolecules",
+      "code": "mamobx",
+      "url": "https://pubs.acs.org/toc/mamobx/current",
+      "abbreviation": "Macromolecules"
+    },
+    {
+      "name": "Inorganic Chemistry",
+      "code": "inocaj",
+      "url": "https://pubs.acs.org/toc/inocaj/current",
+      "abbreviation": "Inorg. Chem."
+    },
+    {
+      "name": "Journal of Natural Products",
+      "code": "jnprdf",
+      "url": "https://pubs.acs.org/toc/jnprdf/current",
+      "abbreviation": "J. Nat. Prod."
+    },
+    {
+      "name": "Journal of Chemical Information and Modeling",
+      "code": "jcisd8",
+      "url": "https://pubs.acs.org/toc/jcisd8/current",
+      "abbreviation": "J. Chem. Inf. Model."
+    },
+    {
+      "name": "Journal of Agricultural and Food Chemistry",
+      "code": "jafcau",
+      "url": "https://pubs.acs.org/toc/jafcau/current",
+      "abbreviation": "J. Agric. Food Chem."
+    },
+    {
+      "name": "Accounts of Chemical Research",
+      "code": "achre4",
+      "url": "https://pubs.acs.org/toc/achre4/current",
+      "abbreviation": "Acc. Chem. Res."
+    },
+    {
+      "name": "Chemical Reviews",
+      "code": "chreay",
+      "url": "https://pubs.acs.org/toc/chreay/current",
+      "abbreviation": "Chem. Rev."
+    },
+    {
+      "name": "Energy & Fuels",
+      "code": "enfuem",
+      "url": "https://pubs.acs.org/toc/enfuem/current",
+      "abbreviation": "Energy Fuels"
+    },
+    {
+      "name": "Industrial & Engineering Chemistry Research",
+      "code": "iecred",
+      "url": "https://pubs.acs.org/toc/iecred/current",
+      "abbreviation": "Ind. Eng. Chem. Res."
+    },
+    {
+      "name": "Bioconjugate Chemistry",
+      "code": "bcches",
+      "url": "https://pubs.acs.org/toc/bcches/current",
+      "abbreviation": "Bioconjugate Chem."
+    },
+    {
+      "name": "Crystal Growth & Design",
+      "code": "cgdefu",
+      "url": "https://pubs.acs.org/toc/cgdefu/current",
+      "abbreviation": "Cryst. Growth Des."
+    },
+    {
+      "name": "Organometallics",
+      "code": "orgnd7",
+      "url": "https://pubs.acs.org/toc/orgnd7/current",
+      "abbreviation": "Organometallics"
+    },
+    {
+      "name": "Biomacromolecules",
+      "code": "bomaf6",
+      "url": "https://pubs.acs.org/toc/bomaf6/current",
+      "abbreviation": "Biomacromolecules"
+    },
+    {
+      "name": "Journal of Proteome Research",
+      "code": "jprobs",
+      "url": "https://pubs.acs.org/toc/jprobs/current",
+      "abbreviation": "J. Proteome Res."
+    },
+    {
+      "name": "Molecular Pharmaceutics",
+      "code": "mpohbp",
+      "url": "https://pubs.acs.org/toc/mpohbp/current",
+      "abbreviation": "Mol. Pharmaceutics"
+    },
+    {
+      "name": "ACS Applied Materials & Interfaces",
+      "code": "aamick",
+      "url": "https://pubs.acs.org/toc/aamick/current",
+      "abbreviation": "ACS Appl. Mater. Interfaces"
+    },
+    {
+      "name": "ACS Chemical Biology",
+      "code": "acbcct",
+      "url": "https://pubs.acs.org/toc/acbcct/current",
+      "abbreviation": "ACS Chem. Biol."
+    },
+    {
+      "name": "ACS Synthetic Biology",
+      "code": "asbcd6",
+      "url": "https://pubs.acs.org/toc/asbcd6/current",
+      "abbreviation": "ACS Synth. Biol."
+    },
+    {
+      "name": "ACS Chemical Neuroscience",
+      "code": "acncdm",
+      "url": "https://pubs.acs.org/toc/acncdm/current",
+      "abbreviation": "ACS Chem. Neurosci."
+    },
+    {
+      "name": "ACS Energy Letters",
+      "code": "aelccp",
+      "url": "https://pubs.acs.org/toc/aelccp/current",
+      "abbreviation": "ACS Energy Lett."
+    },
+    {
+      "name": "ACS Photonics",
+      "code": "apchd5",
+      "url": "https://pubs.acs.org/toc/apchd5/current",
+      "abbreviation": "ACS Photonics"
+    },
+    {
+      "name": "ACS Sensors",
+      "code": "ascefj",
+      "url": "https://pubs.acs.org/toc/ascefj/current",
+      "abbreviation": "ACS Sens."
+    },
+    {
+      "name": "ACS Sustainable Chemistry & Engineering",
+      "code": "ascecg",
+      "url": "https://pubs.acs.org/toc/ascecg/current",
+      "abbreviation": "ACS Sustainable Chem. Eng."
+    },
+    {
+      "name": "Journal of Chemical Education",
+      "code": "jceda8",
+      "url": "https://pubs.acs.org/toc/jceda8/current",
+      "abbreviation": "J. Chem. Educ."
+    },
+    {
+      "name": "Environmental Science & Technology Letters",
+      "code": "estlcu",
+      "url": "https://pubs.acs.org/toc/estlcu/current",
+      "abbreviation": "Environ. Sci. Technol. Lett."
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block title %}Jobs - ACS Paper Crawler{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1><i class="bi bi-list-task"></i> Crawl Jobs</h1>
+        <p class="text-muted">View and manage all crawling jobs</p>
+    </div>
+    <div class="col-auto">
+        <a href="/" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> New Job
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body p-0">
+                {% if jobs %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Status</th>
+                                <th>Journal URL</th>
+                                <th>Progress</th>
+                                <th>Created</th>
+                                <th>Started</th>
+                                <th>Completed</th>
+                                <th>Job ID</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for job in jobs %}
+                            <tr>
+                                <td>
+                                    {% if job.status.value == 'completed' %}
+                                    <span class="badge bg-success status-badge">
+                                        <i class="bi bi-check-circle"></i> Completed
+                                    </span>
+                                    {% elif job.status.value == 'running' %}
+                                    <span class="badge bg-warning status-badge">
+                                        <i class="bi bi-arrow-repeat"></i> Running
+                                    </span>
+                                    {% elif job.status.value == 'failed' %}
+                                    <span class="badge bg-danger status-badge"
+                                          data-bs-toggle="tooltip"
+                                          title="{{ job.error_message or 'Unknown error' }}">
+                                        <i class="bi bi-x-circle"></i> Failed
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-secondary status-badge">
+                                        <i class="bi bi-clock"></i> Pending
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ job.journal_url }}" target="_blank" class="text-decoration-none">
+                                        <small class="text-truncate d-inline-block" style="max-width: 300px;">
+                                            {{ job.journal_url }}
+                                        </small>
+                                        <i class="bi bi-box-arrow-up-right" style="font-size: 0.75rem;"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if job.total_papers > 0 %}
+                                    <div class="d-flex align-items-center">
+                                        <div class="progress flex-grow-1 me-2" style="height: 20px; min-width: 100px;">
+                                            <div class="progress-bar bg-success"
+                                                 role="progressbar"
+                                                 style="width: {{ (job.crawled_papers / job.total_papers * 100) }}%">
+                                            </div>
+                                            {% if job.failed_papers > 0 %}
+                                            <div class="progress-bar bg-danger"
+                                                 role="progressbar"
+                                                 style="width: {{ (job.failed_papers / job.total_papers * 100) }}%">
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <small class="text-nowrap">
+                                            {{ job.crawled_papers }}/{{ job.total_papers }}
+                                            {% if job.failed_papers > 0 %}
+                                            <span class="text-danger">({{ job.failed_papers }} failed)</span>
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                    {% else %}
+                                    <small class="text-muted">-</small>
+                                    {% endif %}
+                                </td>
+                                <td><small>{{ job.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</small></td>
+                                <td>
+                                    {% if job.started_at %}
+                                    <small>{{ job.started_at.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+                                    {% else %}
+                                    <small class="text-muted">-</small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if job.completed_at %}
+                                    <small>{{ job.completed_at.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+                                    {% else %}
+                                    <small class="text-muted">-</small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <small class="font-monospace">{{ job.job_id[:8] }}...</small>
+                                </td>
+                                <td>
+                                    {% if job.status.value in ['pending', 'running'] %}
+                                    <button class="btn btn-sm btn-danger cancel-job-btn"
+                                            data-job-id="{{ job.job_id }}"
+                                            data-bs-toggle="tooltip"
+                                            title="Cancel this job">
+                                        <i class="bi bi-x-circle"></i> Cancel
+                                    </button>
+                                    {% else %}
+                                    <small class="text-muted">-</small>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5 text-muted">
+                    <i class="bi bi-inbox" style="font-size: 4rem;"></i>
+                    <p class="mt-3 h5">No jobs yet</p>
+                    <p>Create your first crawl job to get started</p>
+                    <a href="/" class="btn btn-primary mt-2">
+                        <i class="bi bi-plus-circle"></i> Create Job
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Initialize Bootstrap tooltips
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+// Handle job cancellation
+document.querySelectorAll('.cancel-job-btn').forEach(button => {
+    button.addEventListener('click', async function() {
+        const jobId = this.getAttribute('data-job-id');
+
+        if (!confirm('Are you sure you want to cancel this job?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/jobs/${jobId}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                const data = await response.json();
+                alert(`Failed to cancel job: ${data.detail || 'Unknown error'}`);
+            }
+        } catch (error) {
+            console.error('Error canceling job:', error);
+            alert('Failed to cancel job. Please try again.');
+        }
+    });
+});
+
+// Auto-refresh for running jobs
+{% if jobs|selectattr('status.value', 'equalto', 'running')|list|length > 0 %}
+setTimeout(() => {
+    window.location.reload();
+}, 10000); // Refresh every 10 seconds if there are running jobs
+{% endif %}
+</script>
+{% endblock %}

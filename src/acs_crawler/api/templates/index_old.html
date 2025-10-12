@@ -1,0 +1,496 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - ACS Paper Crawler{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1><i class="bi bi-speedometer2"></i> Dashboard</h1>
+        <p class="text-muted">Monitor your crawling jobs and paper collection</p>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card stat-card primary">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted"><i class="bi bi-file-earmark-text"></i> Total Papers</h6>
+                <h2 class="card-title mb-0">{{ total_papers }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card stat-card info">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted"><i class="bi bi-list-check"></i> Total Jobs</h6>
+                <h2 class="card-title mb-0">{{ total_jobs }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card stat-card warning">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted"><i class="bi bi-arrow-repeat"></i> Running Jobs</h6>
+                <h2 class="card-title mb-0">{{ running_jobs }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card stat-card success">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted"><i class="bi bi-check-circle"></i> Completed Jobs</h6>
+                <h2 class="card-title mb-0">{{ completed_jobs }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create New Job -->
+<div class="row mb-4">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-plus-circle"></i> Create New Crawl Job</h5>
+                <form id="createJobForm">
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="journalSelect" class="form-label">Select an ACS Journal:</label>
+                            <select class="form-select" id="journalSelect">
+                                <option value="">-- Select a journal --</option>
+                            </select>
+                            <div class="form-text">Choose a journal from the list, or enter a custom URL below</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <label for="journalUrl" class="form-label">Or enter custom URL:</label>
+                            <input type="url" class="form-control" id="journalUrl"
+                                   placeholder="Enter ACS journal URL (e.g., https://pubs.acs.org/toc/jmcmar/current)">
+                            <div class="form-text">Enter the URL of an ACS journal issue page</div>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-play-fill"></i> Start Crawling
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div id="jobAlert" class="mt-3" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Charts -->
+<div class="row mb-4">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-pie-chart"></i> Papers by Journal</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="journalChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-bar-chart"></i> Top 10 Authors</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="authorsChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-graph-up"></i> Crawled Papers Over Time</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="timelineChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-calendar3"></i> Publication Years</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="pubYearChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Jobs -->
+<div class="row mb-4">
+    <div class="col">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-clock-history"></i> Recent Jobs</h5>
+                <a href="/jobs" class="btn btn-sm btn-outline-primary">View All</a>
+            </div>
+            <div class="card-body p-0">
+                {% if recent_jobs %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Journal URL</th>
+                                <th>Progress</th>
+                                <th>Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for job in recent_jobs %}
+                            <tr>
+                                <td>
+                                    {% if job.status.value == 'completed' %}
+                                    <span class="badge bg-success status-badge">
+                                        <i class="bi bi-check-circle"></i> Completed
+                                    </span>
+                                    {% elif job.status.value == 'running' %}
+                                    <span class="badge bg-warning status-badge">
+                                        <i class="bi bi-arrow-repeat"></i> Running
+                                    </span>
+                                    {% elif job.status.value == 'failed' %}
+                                    <span class="badge bg-danger status-badge">
+                                        <i class="bi bi-x-circle"></i> Failed
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-secondary status-badge">
+                                        <i class="bi bi-clock"></i> Pending
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <small class="text-truncate d-inline-block" style="max-width: 400px;">
+                                        {{ job.journal_url }}
+                                    </small>
+                                </td>
+                                <td>
+                                    {% if job.total_papers > 0 %}
+                                    <small>{{ job.crawled_papers }}/{{ job.total_papers }} papers</small>
+                                    {% else %}
+                                    <small>-</small>
+                                    {% endif %}
+                                </td>
+                                <td><small>{{ job.created_at.strftime('%Y-%m-%d %H:%M') }}</small></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-4 text-muted">
+                    <i class="bi bi-inbox" style="font-size: 3rem;"></i>
+                    <p class="mt-2">No jobs yet. Create your first crawl job above!</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Papers -->
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-file-text"></i> Recent Papers</h5>
+                <a href="/papers" class="btn btn-sm btn-outline-primary">View All</a>
+            </div>
+            <div class="card-body p-0">
+                {% if recent_papers %}
+                <div class="list-group list-group-flush">
+                    {% for paper in recent_papers %}
+                    <a href="/papers/{{ paper.paper_id }}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">{{ paper.metadata.title }}</h6>
+                            <small>{{ paper.crawled_at.strftime('%Y-%m-%d') }}</small>
+                        </div>
+                        <p class="mb-1 text-muted">
+                            <small>
+                                {% if paper.metadata.authors %}
+                                    {{ paper.metadata.authors[0].name }}
+                                    {% if paper.metadata.authors|length > 1 %}
+                                        et al.
+                                    {% endif %}
+                                {% endif %}
+                            </small>
+                        </p>
+                        <small class="text-muted">DOI: {{ paper.metadata.doi }}</small>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-4 text-muted">
+                    <i class="bi bi-inbox" style="font-size: 3rem;"></i>
+                    <p class="mt-2">No papers crawled yet.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Load ACS journals list
+async function loadJournals() {
+    try {
+        const response = await fetch('/api/journals');
+        const data = await response.json();
+        const select = document.getElementById('journalSelect');
+
+        data.journals.forEach(journal => {
+            const option = document.createElement('option');
+            option.value = journal.url;
+            option.textContent = `${journal.name} (${journal.abbreviation})`;
+            select.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Failed to load journals:', error);
+    }
+}
+
+// Update URL field when journal is selected
+document.getElementById('journalSelect').addEventListener('change', (e) => {
+    if (e.target.value) {
+        document.getElementById('journalUrl').value = e.target.value;
+    }
+});
+
+// Submit form
+document.getElementById('createJobForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const url = document.getElementById('journalUrl').value;
+    const alertDiv = document.getElementById('jobAlert');
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+
+    if (!url) {
+        alertDiv.className = 'alert alert-warning mt-3';
+        alertDiv.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Please select a journal or enter a URL';
+        alertDiv.style.display = 'block';
+        return;
+    }
+
+    // Disable button and show loading
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Creating...';
+
+    try {
+        const response = await fetch('/api/jobs', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ journal_url: url })
+        });
+
+        if (response.ok) {
+            const job = await response.json();
+            alertDiv.className = 'alert alert-success mt-3';
+            alertDiv.innerHTML = `<i class="bi bi-check-circle"></i> Job created successfully! Job ID: ${job.job_id}. The page will refresh in 2 seconds...`;
+            alertDiv.style.display = 'block';
+
+            // Refresh page after 2 seconds
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        } else {
+            const error = await response.json();
+            throw new Error(error.detail || 'Failed to create job');
+        }
+    } catch (error) {
+        alertDiv.className = 'alert alert-danger mt-3';
+        alertDiv.innerHTML = `<i class="bi bi-exclamation-triangle"></i> Error: ${error.message}`;
+        alertDiv.style.display = 'block';
+
+        // Re-enable button
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="bi bi-play-fill"></i> Start Crawling';
+    }
+});
+
+// Load journals on page load
+loadJournals();
+
+// Load and render statistics charts
+async function loadStatistics() {
+    try {
+        const response = await fetch('/api/statistics');
+        const stats = await response.json();
+
+        // Chart colors
+        const colors = [
+            '#0d6efd', '#198754', '#dc3545', '#ffc107', '#0dcaf0',
+            '#6f42c1', '#fd7e14', '#20c997', '#e83e8c', '#6c757d'
+        ];
+
+        // 1. Papers by Journal (Doughnut Chart)
+        const journalCtx = document.getElementById('journalChart').getContext('2d');
+        const journalLabels = Object.keys(stats.papers_by_journal);
+        const journalData = Object.values(stats.papers_by_journal);
+
+        new Chart(journalCtx, {
+            type: 'doughnut',
+            data: {
+                labels: journalLabels,
+                datasets: [{
+                    data: journalData,
+                    backgroundColor: colors,
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 12,
+                            font: { size: 10 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((value / total) * 100).toFixed(1);
+                                return `${label}: ${value} (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 2. Top 10 Authors (Horizontal Bar Chart)
+        const authorsCtx = document.getElementById('authorsChart').getContext('2d');
+        const topAuthors = stats.top_authors.slice(0, 10);
+
+        new Chart(authorsCtx, {
+            type: 'bar',
+            data: {
+                labels: topAuthors.map(a => a.name),
+                datasets: [{
+                    label: 'Papers',
+                    data: topAuthors.map(a => a.count),
+                    backgroundColor: '#0d6efd',
+                    borderColor: '#0d6efd',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.parsed.x} papers`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
+
+        // 3. Crawled Papers Over Time (Line Chart)
+        const timelineCtx = document.getElementById('timelineChart').getContext('2d');
+        const monthLabels = Object.keys(stats.papers_by_month);
+        const monthData = Object.values(stats.papers_by_month);
+
+        new Chart(timelineCtx, {
+            type: 'line',
+            data: {
+                labels: monthLabels,
+                datasets: [{
+                    label: 'Papers Crawled',
+                    data: monthData,
+                    borderColor: '#198754',
+                    backgroundColor: 'rgba(25, 135, 84, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 10 }
+                    }
+                }
+            }
+        });
+
+        // 4. Publication Years (Bar Chart)
+        const pubYearCtx = document.getElementById('pubYearChart').getContext('2d');
+        const pubYearLabels = Object.keys(stats.publication_years);
+        const pubYearData = Object.values(stats.publication_years);
+
+        new Chart(pubYearCtx, {
+            type: 'bar',
+            data: {
+                labels: pubYearLabels,
+                datasets: [{
+                    label: 'Papers Published',
+                    data: pubYearData,
+                    backgroundColor: '#ffc107',
+                    borderColor: '#ffc107',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 5 }
+                    }
+                }
+            }
+        });
+
+    } catch (error) {
+        console.error('Failed to load statistics:', error);
+    }
+}
+
+// Load statistics on page load
+loadStatistics();
+</script>
+{% endblock %}

@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}{{ paper.metadata.title }} - ACS Paper Crawler{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/papers">Papers</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Paper Detail</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title mb-3">{{ paper.metadata.title }}</h2>
+
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <h5 class="text-muted mb-3">
+                            <i class="bi bi-people"></i> Authors
+                        </h5>
+                        {% if paper.metadata.authors %}
+                        <ul class="list-unstyled">
+                            {% for author in paper.metadata.authors %}
+                            <li class="mb-1">
+                                <strong>{{ author.name }}</strong>
+                                {% if author.affiliation %}
+                                <br><small class="text-muted">{{ author.affiliation }}</small>
+                                {% endif %}
+                                {% if author.email %}
+                                <br><small class="text-muted"><i class="bi bi-envelope"></i> {{ author.email }}</small>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p class="text-muted">No author information available</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4">
+                        <h5 class="text-muted mb-3">
+                            <i class="bi bi-info-circle"></i> Metadata
+                        </h5>
+                        <dl class="row">
+                            <dt class="col-sm-5">DOI:</dt>
+                            <dd class="col-sm-7">
+                                <a href="https://doi.org/{{ paper.metadata.doi }}" target="_blank">
+                                    {{ paper.metadata.doi }}
+                                    <i class="bi bi-box-arrow-up-right" style="font-size: 0.75rem;"></i>
+                                </a>
+                            </dd>
+
+                            {% if paper.metadata.journal %}
+                            <dt class="col-sm-5">Journal:</dt>
+                            <dd class="col-sm-7">{{ paper.metadata.journal }}</dd>
+                            {% endif %}
+
+                            {% if paper.metadata.volume %}
+                            <dt class="col-sm-5">Volume:</dt>
+                            <dd class="col-sm-7">{{ paper.metadata.volume }}</dd>
+                            {% endif %}
+
+                            {% if paper.metadata.issue %}
+                            <dt class="col-sm-5">Issue:</dt>
+                            <dd class="col-sm-7">{{ paper.metadata.issue }}</dd>
+                            {% endif %}
+
+                            {% if paper.metadata.pages %}
+                            <dt class="col-sm-5">Pages:</dt>
+                            <dd class="col-sm-7">{{ paper.metadata.pages }}</dd>
+                            {% endif %}
+
+                            {% if paper.metadata.publication_date %}
+                            <dt class="col-sm-5">Published:</dt>
+                            <dd class="col-sm-7">{{ paper.metadata.publication_date }}</dd>
+                            {% endif %}
+
+                            <dt class="col-sm-5">Crawled:</dt>
+                            <dd class="col-sm-7">{{ paper.crawled_at.strftime('%Y-%m-%d %H:%M') }}</dd>
+                        </dl>
+
+                        <div class="d-grid gap-2 mt-3">
+                            <a href="{{ paper.metadata.url }}" class="btn btn-primary" target="_blank">
+                                <i class="bi bi-box-arrow-up-right"></i> View on ACS
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="mb-3">
+                    <h5 class="text-muted mb-3">
+                        <i class="bi bi-file-text"></i> Abstract
+                    </h5>
+                    {% if paper.metadata.abstract %}
+                    <p class="text-justify" style="line-height: 1.6;">{{ paper.metadata.abstract }}</p>
+                    {% else %}
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle"></i> No abstract available for this paper.
+                    </div>
+                    {% endif %}
+                </div>
+
+                {% if paper.metadata.keywords %}
+                <hr>
+                <div class="mb-3">
+                    <h5 class="text-muted mb-3">
+                        <i class="bi bi-tags"></i> Keywords
+                    </h5>
+                    <div>
+                        {% for keyword in paper.metadata.keywords %}
+                        <span class="badge bg-primary me-2 mb-2">{{ keyword }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <a href="/papers" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Papers
+        </a>
+    </div>
+</div>
+{% endblock %}

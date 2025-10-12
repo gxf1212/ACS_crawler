@@ -1,0 +1,329 @@
+{% extends "base.html" %}
+
+{% block title %}Papers - ACS Paper Crawler{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/dashboard.css">
+<style>
+.filter-card {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border: none;
+    margin-bottom: 1.5rem;
+}
+
+.filter-card .card-body {
+    padding: 1.5rem;
+}
+
+.badge-clickable {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.badge-clickable:hover {
+    transform: scale(1.05);
+}
+
+.paper-card {
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.paper-card:hover {
+    border-left-color: #0d6efd;
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stats-badge {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4 animate-fade-in">
+    <div class="col-lg-6">
+        <h1><i class="bi bi-file-text"></i> Crawled Papers</h1>
+        <p class="text-muted">Browse and filter collected papers</p>
+    </div>
+    <div class="col-lg-6 d-flex align-items-center justify-content-end flex-wrap gap-2">
+        <a href="/api/papers/export/csv" class="btn btn-outline-success btn-lg px-4 py-2" download style="font-size: 1.1rem;">
+            <i class="bi bi-download"></i> Export CSV
+        </a>
+        <button class="btn btn-outline-primary btn-lg px-4 py-2" data-bs-toggle="modal" data-bs-target="#chartsModal" style="font-size: 1.1rem;">
+            <i class="bi bi-bar-chart-line"></i> Statistics
+        </button>
+        <span class="badge bg-primary stats-badge">
+            <i class="bi bi-file-earmark-text"></i> <span id="totalCount">{{ papers|length }}</span> papers
+        </span>
+        <span class="badge bg-info stats-badge">
+            <i class="bi bi-funnel"></i> <span id="filteredCount">{{ papers|length }}</span> shown
+        </span>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="row mb-4 animate-fade-in">
+    <div class="col">
+        <div class="card filter-card">
+            <div class="card-body">
+                <div class="row align-items-end">
+                    <div class="col-md-3">
+                        <label for="searchInput" class="form-label fw-bold">
+                            <i class="bi bi-search"></i> Search
+                        </label>
+                        <input type="text" class="form-control" id="searchInput"
+                               placeholder="Title, author, DOI, abstract...">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="journalFilter" class="form-label fw-bold">
+                            <i class="bi bi-journal"></i> Journal
+                        </label>
+                        <select class="form-select" id="journalFilter">
+                            <option value="">All Journals</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="yearFilter" class="form-label fw-bold">
+                            <i class="bi bi-calendar"></i> Year
+                        </label>
+                        <select class="form-select" id="yearFilter">
+                            <option value="">All Years</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="abstractFilter" class="form-label fw-bold">
+                            <i class="bi bi-file-text"></i> Abstract
+                        </label>
+                        <select class="form-select" id="abstractFilter">
+                            <option value="">All</option>
+                            <option value="with">With Abstract</option>
+                            <option value="without">Without Abstract</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-outline-secondary w-100" id="clearFilters">
+                            <i class="bi bi-x-circle"></i> Clear
+                        </button>
+                    </div>
+                </div>
+                <div class="row mt-3" id="activeFiltersRow" style="display: none;">
+                    <div class="col">
+                        <small class="text-muted fw-bold">Active Filters:</small>
+                        <div id="activeFilterBadges" class="d-inline-block ms-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Papers List -->
+<div class="row animate-fade-in">
+    <div class="col">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="bi bi-list-ul"></i> Papers
+                    <span class="badge bg-secondary" id="resultCount">{{ papers|length }}</span>
+                </h5>
+                <div>
+                    <select class="form-select form-select-sm" id="sortSelect" style="width: auto;">
+                        <option value="date-desc">Newest First</option>
+                        <option value="date-asc">Oldest First</option>
+                        <option value="title-asc">Title A-Z</option>
+                        <option value="title-desc">Title Z-A</option>
+                        <option value="journal">Journal</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-body p-0" id="papersContainer">
+                {% if papers %}
+                <div class="list-group list-group-flush" id="papersList">
+                    {% for paper in papers %}
+                    <a href="/papers/{{ paper.paper_id }}"
+                       class="list-group-item list-group-item-action paper-card"
+                       data-title="{{ paper.metadata.title|lower }}"
+                       data-authors="{{ paper.metadata.authors|map(attribute='name')|join(', ')|lower }}"
+                       data-doi="{{ paper.metadata.doi|lower }}"
+                       data-abstract="{{ paper.metadata.abstract|lower if paper.metadata.abstract else '' }}"
+                       data-journal="{{ paper.metadata.journal if paper.metadata.journal else '' }}"
+                       data-year="{{ paper.metadata.publication_date[:4] if paper.metadata.publication_date and paper.metadata.publication_date|length >= 4 else '' }}"
+                       data-has-abstract="{{ 'yes' if paper.metadata.abstract else 'no' }}"
+                       data-crawled="{{ paper.crawled_at.strftime('%Y-%m-%d') }}">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h6 class="mb-2">{{ paper.metadata.title }}</h6>
+                                <p class="mb-1 text-muted">
+                                    <small>
+                                        <strong><i class="bi bi-people"></i> Authors:</strong>
+                                        {% if paper.metadata.authors %}
+                                            {% for author in paper.metadata.authors[:3] %}
+                                                {{ author.name }}{% if not loop.last %}, {% endif %}
+                                            {% endfor %}
+                                            {% if paper.metadata.authors|length > 3 %}
+                                                , et al. (+{{ paper.metadata.authors|length - 3 }})
+                                            {% endif %}
+                                        {% else %}
+                                            <span class="text-danger">No author information available</span>
+                                        {% endif %}
+                                    </small>
+                                </p>
+                                <p class="mb-0">
+                                    <small class="text-muted">
+                                        <i class="bi bi-hash"></i> <strong>DOI:</strong> {{ paper.metadata.doi }}
+                                        {% if paper.metadata.journal %}
+                                        | <i class="bi bi-journal"></i> <strong>Journal:</strong> {{ paper.metadata.journal }}
+                                        {% endif %}
+                                        {% if paper.metadata.publication_date %}
+                                        | <i class="bi bi-calendar-event"></i> <strong>Published:</strong> {{ paper.metadata.publication_date }}
+                                        {% endif %}
+                                        {% if paper.metadata.volume %}
+                                        | <strong>Vol:</strong> {{ paper.metadata.volume }}
+                                        {% endif %}
+                                        {% if paper.metadata.issue %}
+                                        | <strong>Issue:</strong> {{ paper.metadata.issue }}
+                                        {% endif %}
+                                        {% if paper.metadata.pages %}
+                                        | <strong>Pages:</strong> {{ paper.metadata.pages }}
+                                        {% endif %}
+                                    </small>
+                                </p>
+                            </div>
+                            <div class="col-md-3 text-end">
+                                <small class="text-muted d-block mb-2">
+                                    <i class="bi bi-clock"></i> Crawled: {{ paper.crawled_at.strftime('%Y-%m-%d') }}
+                                </small>
+                                {% if paper.metadata.abstract %}
+                                <span class="badge bg-success mb-2">
+                                    <i class="bi bi-check-circle"></i> Abstract
+                                </span>
+                                {% endif %}
+                                {% if paper.metadata.keywords %}
+                                <div class="mt-2">
+                                    {% for keyword in paper.metadata.keywords[:3] %}
+                                    <span class="badge bg-secondary me-1 badge-clickable"
+                                          onclick="event.preventDefault(); searchKeyword('{{ keyword }}')">
+                                        {{ keyword }}
+                                    </span>
+                                    {% endfor %}
+                                    {% if paper.metadata.keywords|length > 3 %}
+                                    <span class="badge bg-secondary">+{{ paper.metadata.keywords|length - 3 }}</span>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-inbox"></i>
+                    <p>No papers yet</p>
+                    <p>Start a crawl job to collect papers</p>
+                    <a href="/" class="btn btn-primary mt-2">
+                        <i class="bi bi-plus-circle"></i> Create Job
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div class="card mt-3" id="noResultsCard" style="display: none;">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-search" style="font-size: 3rem; color: #6c757d;"></i>
+                <h5 class="mt-3">No papers match your filters</h5>
+                <p class="text-muted">Try adjusting your search criteria</p>
+                <button class="btn btn-outline-primary" onclick="document.getElementById('clearFilters').click()">
+                    <i class="bi bi-x-circle"></i> Clear Filters
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Charts Modal -->
+<div class="modal fade" id="chartsModal" tabindex="-1" aria-labelledby="chartsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="chartsModalLabel">
+                    <i class="bi bi-bar-chart-line"></i> Papers Statistics & Charts
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Statistics Charts -->
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3">
+                        <div class="card chart-card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-pie-chart"></i> Papers by Journal</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="journalChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card chart-card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-bar-chart"></i> Top 10 Authors</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="authorsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-3">
+                        <div class="card chart-card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-graph-up"></i> Crawled Papers Over Time</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="timelineChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card chart-card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-calendar3"></i> Publication Years</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="pubYearChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/api.js"></script>
+<script src="/static/js/charts.js"></script>
+<script src="/static/js/ui.js"></script>
+<script src="/static/js/papers-charts.js"></script>
+<script src="/static/js/papers-filter.js"></script>
+{% endblock %}

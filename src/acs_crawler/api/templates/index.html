@@ -1,0 +1,349 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - ACS Paper Crawler{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/dashboard.css">
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4 animate-fade-in">
+    <div class="col">
+        <h1><i class="bi bi-speedometer2"></i> Dashboard</h1>
+        <p class="text-muted">Monitor your crawling jobs and paper collection</p>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4 animate-fade-in">
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card stat-card primary">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted"><i class="bi bi-file-earmark-text"></i> Total Papers</h6>
+                <h2 class="card-title mb-0">{{ total_papers }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card stat-card info">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted"><i class="bi bi-list-check"></i> Total Jobs</h6>
+                <h2 class="card-title mb-0">{{ total_jobs }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card stat-card warning">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted"><i class="bi bi-arrow-repeat"></i> Running Jobs</h6>
+                <h2 class="card-title mb-0">{{ running_jobs }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card stat-card success">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted"><i class="bi bi-check-circle"></i> Completed Jobs</h6>
+                <h2 class="card-title mb-0">{{ completed_jobs }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create New Job -->
+<div class="row mb-4 animate-fade-in">
+    <div class="col">
+        <div class="card job-form-card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-plus-circle"></i> Create New Crawl Job</h5>
+
+                <!-- Job Type Tabs -->
+                <ul class="nav nav-tabs mb-3" id="jobTypeTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="journal-tab" data-bs-toggle="tab" data-bs-target="#journal-tab-pane" type="button">
+                            <i class="bi bi-journal"></i> Journal Issue
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="search-tab" data-bs-toggle="tab" data-bs-target="#search-tab-pane" type="button">
+                            <i class="bi bi-search"></i> Search Query
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="jobTypeTabContent">
+                    <!-- Journal Tab -->
+                    <div class="tab-pane fade show active" id="journal-tab-pane">
+                        <!-- Quick Access: Recent/Frequent Journals -->
+                        <div id="recentJournalsSection" class="mb-4" style="display: none;">
+                            <h6 class="text-muted mb-2">
+                                <i class="bi bi-star"></i> Quick Access - Frequently Crawled:
+                            </h6>
+                            <div id="recentJournalBadges" class="d-flex flex-wrap gap-2"></div>
+                        </div>
+
+                        <form id="createJobForm">
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="journalSelect" class="form-label">Select an ACS Journal:</label>
+                            <select class="form-select" id="journalSelect">
+                                <option value="">-- Select a journal --</option>
+                            </select>
+                            <div class="form-text">Choose a journal from the list, or enter a custom URL below</div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-9">
+                            <label for="journalUrl" class="form-label">Or enter custom URL:</label>
+                            <input type="url" class="form-control" id="journalUrl"
+                                   placeholder="Enter ACS journal URL (e.g., https://pubs.acs.org/toc/jmcmar/current)">
+                            <div class="form-text">Enter the URL of an ACS journal issue page</div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="journalMaxResults" class="form-label">Max Papers:</label>
+                            <input type="number" class="form-control" id="journalMaxResults"
+                                   placeholder="All" min="1" max="1000">
+                            <div class="form-text">Leave empty for all</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-play-fill"></i> Start Crawling
+                            </button>
+                        </div>
+                    </div>
+                        </form>
+                        <div id="jobAlert" class="mt-3" style="display: none;"></div>
+                    </div>
+
+                    <!-- Search Tab -->
+                    <div class="tab-pane fade" id="search-tab-pane">
+                        <form id="createSearchJobForm">
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="searchQuery" class="form-label fw-bold">Search Query:</label>
+                                    <input type="text" class="form-control" id="searchQuery"
+                                           placeholder="Enter keywords (e.g., rdrp, CRISPR, photocatalysis)" required>
+                                    <div class="form-text">Search across all ACS publications</div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="sortBy" class="form-label">Sort By:</label>
+                                    <select class="form-select" id="sortBy">
+                                        <option value="Relevance">Relevance</option>
+                                        <option value="Earliest_desc">Newest First</option>
+                                        <option value="Earliest_asc">Oldest First</option>
+                                        <option value="MostCited">Most Cited</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="pageSize" class="form-label">Results Per Page:</label>
+                                    <select class="form-select" id="pageSize">
+                                        <option value="20" selected>20</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="searchMaxResults" class="form-label">Max Results:</label>
+                                    <input type="number" class="form-control" id="searchMaxResults"
+                                           placeholder="All" min="1" max="10000">
+                                    <div class="form-text">Total papers to crawl</div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label class="form-label fw-bold">Date Range (Optional):</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="afterMonth" class="form-label">From:</label>
+                                    <div class="row g-2">
+                                        <div class="col">
+                                            <select class="form-select" id="afterMonth">
+                                                <option value="">Month</option>
+                                                <option value="1">January</option>
+                                                <option value="2">February</option>
+                                                <option value="3">March</option>
+                                                <option value="4">April</option>
+                                                <option value="5">May</option>
+                                                <option value="6">June</option>
+                                                <option value="7">July</option>
+                                                <option value="8">August</option>
+                                                <option value="9">September</option>
+                                                <option value="10">October</option>
+                                                <option value="11">November</option>
+                                                <option value="12">December</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <input type="number" class="form-control" id="afterYear"
+                                                   placeholder="Year (e.g., 2020)" min="1900" max="2100">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="beforeMonth" class="form-label">To:</label>
+                                    <div class="row g-2">
+                                        <div class="col">
+                                            <select class="form-select" id="beforeMonth">
+                                                <option value="">Month</option>
+                                                <option value="1">January</option>
+                                                <option value="2">February</option>
+                                                <option value="3">March</option>
+                                                <option value="4">April</option>
+                                                <option value="5">May</option>
+                                                <option value="6">June</option>
+                                                <option value="7">July</option>
+                                                <option value="8">August</option>
+                                                <option value="9">September</option>
+                                                <option value="10">October</option>
+                                                <option value="11">November</option>
+                                                <option value="12">December</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <input type="number" class="form-control" id="beforeYear"
+                                                   placeholder="Year (e.g., 2025)" min="1900" max="2100">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-success w-100">
+                                        <i class="bi bi-search"></i> Start Search Crawl
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="searchJobAlert" class="mt-3" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Jobs -->
+<div class="row mb-4 animate-fade-in">
+    <div class="col">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-clock-history"></i> Recent Jobs</h5>
+                <a href="/jobs" class="btn btn-sm btn-outline-primary">View All</a>
+            </div>
+            <div class="card-body p-0">
+                {% if recent_jobs %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Journal URL</th>
+                                <th>Progress</th>
+                                <th>Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for job in recent_jobs %}
+                            <tr>
+                                <td>
+                                    {% if job.status.value == 'completed' %}
+                                    <span class="badge bg-success status-badge">
+                                        <i class="bi bi-check-circle"></i> Completed
+                                    </span>
+                                    {% elif job.status.value == 'running' %}
+                                    <span class="badge bg-warning status-badge">
+                                        <i class="bi bi-arrow-repeat"></i> Running
+                                    </span>
+                                    {% elif job.status.value == 'failed' %}
+                                    <span class="badge bg-danger status-badge">
+                                        <i class="bi bi-x-circle"></i> Failed
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-secondary status-badge">
+                                        <i class="bi bi-clock"></i> Pending
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <small class="text-truncate d-inline-block" style="max-width: 400px;">
+                                        {{ job.journal_url }}
+                                    </small>
+                                </td>
+                                <td>
+                                    {% if job.total_papers > 0 %}
+                                    <small>{{ job.crawled_papers }}/{{ job.total_papers }} papers</small>
+                                    {% else %}
+                                    <small>-</small>
+                                    {% endif %}
+                                </td>
+                                <td><small>{{ job.created_at.strftime('%Y-%m-%d %H:%M') }}</small></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-inbox"></i>
+                    <p>No jobs yet. Create your first crawl job above!</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Papers -->
+<div class="row animate-fade-in">
+    <div class="col">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-file-text"></i> Recent Papers</h5>
+                <a href="/papers" class="btn btn-sm btn-outline-primary">View All</a>
+            </div>
+            <div class="card-body p-0">
+                {% if recent_papers %}
+                <div class="list-group list-group-flush">
+                    {% for paper in recent_papers %}
+                    <a href="/papers/{{ paper.paper_id }}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">{{ paper.metadata.title }}</h6>
+                            <small>{{ paper.crawled_at.strftime('%Y-%m-%d') }}</small>
+                        </div>
+                        <p class="mb-1 text-muted">
+                            <small>
+                                {% if paper.metadata.authors %}
+                                    {{ paper.metadata.authors[0].name }}
+                                    {% if paper.metadata.authors|length > 1 %}
+                                        et al.
+                                    {% endif %}
+                                {% endif %}
+                            </small>
+                        </p>
+                        <small class="text-muted">DOI: {{ paper.metadata.doi }}</small>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-inbox"></i>
+                    <p>No papers crawled yet.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Load modules in order: API -> Charts -> UI -> Dashboard -->
+<script src="/static/js/api.js"></script>
+<script src="/static/js/charts.js"></script>
+<script src="/static/js/ui.js"></script>
+<script src="/static/js/dashboard.js"></script>
+{% endblock %}
