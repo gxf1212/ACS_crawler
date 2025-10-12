@@ -39,8 +39,15 @@ logs/*
 *.db
 *.sqlite
 *.sqlite3
-data/*
+
+# Data directories - exclude contents but keep .gitkeep files
+data/
 !data/.gitkeep
+logs/
+!logs/.gitkeep
+src/acs_crawler/data/
+!src/acs_crawler/data/.gitkeep
+!src/acs_crawler/data/acs_journals.json
 
 # Sphinx documentation
 docs/_build/
@@ -80,4 +87,3 @@ test_*.py
 tmp/
 temp/
 *.tmp
-software-copyright/

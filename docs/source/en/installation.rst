@@ -416,21 +416,4 @@ Docker Troubleshooting
     # With Docker CLI
     docker build -t acs-crawler:latest . --no-cache
 
-Troubleshooting
----------------
-
-If you encounter any issues during installation, please refer to the :doc:`troubleshooting` guide for detailed solutions.
-
-Common installation issues include:
-
-* Chrome/ChromeDriver not found or version mismatch
-* Port 8000 already in use
-* Permission denied errors
-* Import/dependency errors
-* Database locked errors
-
-For help:
-
-* 📚 Check the :doc:`troubleshooting` guide
-* 🐛 `Report an Issue <https://github.com/gxf1212/ACS_crawler/issues>`_
-* 💬 `Ask in Discussions <https://github.com/gxf1212/ACS_crawler/discussions>`_
+For more detailed troubleshooting information, please refer to the :doc:`troubleshooting` guide.
