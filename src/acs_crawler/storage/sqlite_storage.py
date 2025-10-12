@@ -229,6 +229,17 @@ class SQLiteStorage:
                 keywords = [r['keyword'] for r in cursor.fetchall()]
 
                 # Build Paper object
+                # Note: sqlite3.Row doesn't have .get() method, use try/except or check keys
+                try:
+                    is_open_access = bool(row['is_open_access'])
+                except (KeyError, TypeError):
+                    is_open_access = False
+
+                try:
+                    oa_pdf_url = row['oa_pdf_url']
+                except (KeyError, TypeError):
+                    oa_pdf_url = None
+
                 metadata = PaperMetadata(
                     title=row['title'],
                     doi=row['doi'],
@@ -241,8 +252,8 @@ class SQLiteStorage:
                     issue=row['issue'],
                     pages=row['pages'],
                     keywords=keywords,
-                    is_open_access=bool(row.get('is_open_access', 0)),
-                    oa_pdf_url=row.get('oa_pdf_url'),
+                    is_open_access=is_open_access,
+                    oa_pdf_url=oa_pdf_url,
                 )
 
                 return Paper(
