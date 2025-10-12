@@ -78,3 +78,4 @@ test_*.py
 tmp/
 temp/
 *.tmp
+software-copyright/

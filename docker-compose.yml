@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  acs-crawler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: acs-crawler:latest
+    container_name: acs-crawler
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persist database and logs
+      - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      # Application settings
+      - PYTHONUNBUFFERED=1
+      # Chrome settings for Docker
+      - CHROME_BIN=/usr/bin/google-chrome
+      - DISPLAY=:99
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    # Resource limits (optional, adjust as needed)
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+    # Network mode for better isolation
+    networks:
+      - acs-network
+
+networks:
+  acs-network:
+    driver: bridge
