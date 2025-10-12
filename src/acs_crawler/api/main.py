@@ -290,9 +290,12 @@ async def export_papers_csv():
     try:
         papers = crawler_service.list_all_papers()
 
-        # Create CSV in memory
+        # Create CSV in memory with UTF-8 BOM for Excel compatibility
         output = StringIO()
-        writer = csv.writer(output)
+        # Write BOM for Excel to recognize UTF-8
+        output.write('\ufeff')
+
+        writer = csv.writer(output, quoting=csv.QUOTE_MINIMAL)
 
         # Write header
         writer.writerow([
@@ -302,12 +305,14 @@ async def export_papers_csv():
 
         # Write data
         for paper in papers:
+            # Join authors with semicolon + space
             authors_str = '; '.join([author.name for author in paper.metadata.authors])
+            # Join keywords with semicolon + space
             keywords_str = '; '.join(paper.metadata.keywords) if paper.metadata.keywords else ''
 
             writer.writerow([
-                paper.metadata.doi,
-                paper.metadata.title,
+                paper.metadata.doi or '',
+                paper.metadata.title or '',
                 authors_str,
                 paper.metadata.journal or '',
                 paper.metadata.volume or '',
@@ -316,16 +321,19 @@ async def export_papers_csv():
                 paper.metadata.publication_date or '',
                 paper.metadata.abstract or '',
                 keywords_str,
-                paper.metadata.url,
+                paper.metadata.url or '',
                 paper.crawled_at.isoformat()
             ])
 
-        # Return CSV
+        # Return CSV with UTF-8 encoding
         output.seek(0)
         return StreamingResponse(
             iter([output.getvalue()]),
-            media_type="text/csv",
-            headers={"Content-Disposition": "attachment; filename=acs_papers.csv"}
+            media_type="text/csv; charset=utf-8",
+            headers={
+                "Content-Disposition": "attachment; filename=acs_papers.csv",
+                "Content-Type": "text/csv; charset=utf-8"
+            }
         )
     except Exception as e:
         logger.error(f"Failed to export papers: {e}")
