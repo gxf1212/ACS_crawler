@@ -7,14 +7,7 @@ Web Interface
 Dashboard
 ~~~~~~~~~
 
-The dashboard provides an overview of your crawling activity:
-
-.. figure:: /_static/index.png
-   :alt: Dashboard Screenshot
-   :align: center
-   :width: 90%
-
-   Main dashboard with statistics, charts, and quick access buttons
+The dashboard provides an overview of your crawling activity.
 
 Features:
 
@@ -47,14 +40,7 @@ Examples:
 Browsing Papers
 ~~~~~~~~~~~~~~~
 
-Navigate to the **Papers** page to browse and filter collected papers:
-
-.. figure:: /_static/papers.png
-   :alt: Papers List Screenshot
-   :align: center
-   :width: 90%
-
-   Papers page with advanced filtering and search
+Navigate to the **Papers** page to browse and filter collected papers.
 
 How to use:
 
@@ -67,26 +53,12 @@ How to use:
    * **Abstract**: Filter with/without abstracts
 
 3. Sort by date, title, or journal
-4. Click any paper for full details
-
-.. figure:: /_static/paper_detail.png
-   :alt: Paper Detail Screenshot
-   :align: center
-   :width: 90%
-
-   Detailed paper view with complete metadata
+4. Click any paper for full details with complete metadata
 
 Managing Jobs
 ~~~~~~~~~~~~~
 
-Monitor and manage all crawling jobs in the **Jobs** page:
-
-.. figure:: /_static/jobs.png
-   :alt: Jobs Page Screenshot
-   :align: center
-   :width: 90%
-
-   Jobs management page with status tracking and controls
+Monitor and manage all crawling jobs in the **Jobs** page.
 
 Features:
 
