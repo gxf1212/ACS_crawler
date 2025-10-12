@@ -9,98 +9,129 @@
 
 \subsection{软件简介与主要功能}
 \label{ssec:intro_summary_features}
-"\Name"是一个专门用于分子动力学（MD）轨迹分析的综合性软件平台，特别针对双组分高分子自组装体系的表征与分析而设计。该软件基于Python科学计算生态系统开发，集成了25种以上的分析方法，为透明质酸-寡聚肽（HA/OP）等高分子自组装体系提供全面的结构、动力学和热力学性质分析工具。
+"\Name"是一个专业的美国化学会（ACS）出版物论文网络爬虫系统，具有现代化的Web仪表板和数据分析功能。该软件基于Python生态系统开发，集成了Selenium自动化爬虫技术、FastAPI Web框架和SQLite数据库，为科研人员和学术机构提供高效、可靠的学术论文数据采集解决方案。
 
-软件采用模块化架构设计，支持单轨迹深度分析和多组对比分析两种工作模式，通过灵活的YAML配置系统和命令行界面，为研究人员提供高效、可复现的分析工作流程。
+软件采用模块化架构设计，支持后台异步任务处理、实时进度跟踪和数据可视化，通过直观的Web界面为用户提供便捷的论文检索、筛选和管理功能。
 
 \subsubsection{核心功能模块}
 \label{sssec:core_modules}
 
-\textbf{单轨迹分析系统（analyze\_single.py）：}
+\textbf{论文爬取系统（Paper Scraper）：}
 \begin{itemize}
-    \item 提供25种以上专业分析方法，包括结构性质分析（回转半径、端到端距离）、分子间相互作用分析（径向分布函数、接触网络）、聚集行为分析（团簇识别、结构因子）等
-    \item 支持GROMACS轨迹格式，兼容多种分子动力学软件产生的数据
-    \item 集成智能缓存机制，显著提升重复分析的效率
-    \item 内置并行处理框架，充分利用多核处理器资源
+    \item 支持43种预配置的ACS学术期刊，覆盖化学、材料科学、生物学等领域
+    \item 基于Selenium的智能浏览器自动化，有效绕过反爬虫机制
+    \item 完整的元数据提取，包括标题、DOI、作者、摘要、关键词、引用信息等
+    \item 智能错误处理和重试机制，确保爬取过程的稳定性
 \end{itemize}
 
-\textbf{多组对比分析系统（compare\_groups.py）：}
+\textbf{Web仪表板系统（Dashboard）：}
 \begin{itemize}
-    \item 支持多个实验条件或体系的横向对比分析
-    \item 自动生成统一格式的对比图表和统计分析结果
-    \item 提供组间差异统计检验和可视化
-    \item 支持批量处理多个轨迹文件
+    \item 现代化的响应式Web界面，基于Bootstrap 5框架
+    \item 实时数据可视化，集成Chart.js图表库
+    \item 高级搜索和筛选功能，支持按标题、作者、期刊、年份等多维度过滤
+    \item 详细的论文信息展示页面，包含完整的学术元数据
 \end{itemize}
 
-\textbf{配置管理系统：}
+\textbf{后台任务管理系统：}
 \begin{itemize}
-    \item 基于YAML的层次化配置文件系统，支持参数继承和环境变量替换
-    \item 提供多套预配置模板，涵盖不同分析场景和体系类型
-    \item 支持动态参数调整和配置验证
-    \item 完整的配置文档和示例库
+    \item 异步任务处理架构，支持多个爬取任务并发执行
+    \item 实时进度跟踪和任务状态监控
+    \item 任务取消和日志查看功能
+    \item 智能资源管理，避免系统过载
 \end{itemize}
 
-\textbf{可视化与数据管理：}
+\textbf{数据存储与检索系统：}
 \begin{itemize}
-    \item 集成专业的科学绘图模块，生成发表级质量图表
-    \item 支持多种输出格式（PNG、PDF、SVG等）
-    \item 提供统一的图表样式和色彩主题管理
-    \item 完善的数据缓存和结果管理机制
+    \item 基于SQLite的关系型数据库，支持复杂查询和数据分析
+    \item 完整的数据模型设计，包括论文、作者、关键词、爬取任务等实体
+    \item 全文搜索功能，支持快速检索论文内容
+    \item 数据导出功能，支持CSV、Excel等多种格式
+\end{itemize}
+
+\textbf{RESTful API系统：}
+\begin{itemize}
+    \item 完整的REST API接口，支持第三方系统集成
+    \item 自动生成的API文档，位于\lstinline|/docs|路径
+    \item 标准化的HTTP响应格式，支持JSON数据交换
+    \item 完善的错误处理和状态码管理
 \end{itemize}
 
 \subsection{技术特色与优势}
 \label{ssec:technical_features}
 
-\textbf{高性能并行计算：} 采用基于进程池的并行处理架构，支持多轨迹并发分析，充分利用现代多核处理器的计算能力。
+\textbf{现代化技术栈：} 采用Python 3.9+、FastAPI、Selenium、Bootstrap 5等现代Web技术，确保系统的高性能和可维护性。
 
-\textbf{智能缓存系统：} 内置分层缓存机制，自动检测和复用已计算的中间结果，大幅减少重复计算时间。
+\textbf{反爬虫绕过：} 集成Selenium WebDriver和WebDriver Manager，自动管理浏览器驱动，有效应对网站的自动化检测机制。
 
-\textbf{模块化设计：} 采用松耦合的模块化架构，便于功能扩展和定制化开发。
+\textbf{异步处理架构：} 基于FastAPI的异步框架设计，支持高并发请求处理，提升用户体验。
 
-\textbf{配置驱动：} 基于YAML的配置系统，支持复杂分析流程的声明式定义，提高分析的可重现性。
+\textbf{模块化设计：} 采用松耦合的模块化架构，便于功能扩展和定制化开发，各组件职责明确，接口清晰。
 
-\textbf{专业可视化：} 集成matplotlib和seaborn等专业绘图库，提供丰富的可视化选项和发表级图表质量。
+\textbf{用户友好界面：} 提供直观的Web界面，无需编程知识即可完成复杂的论文爬取和管理任务。
+
+\textbf{数据完整性：} 确保爬取数据的完整性和准确性，提供数据验证和错误恢复机制。
 
 \subsection{适用对象}
 \label{ssec:intro_target_audience}
 本软件主要适用于以下用户群体及研究领域：
 
 \begin{itemize}
-    \item \textbf{分子动力学研究人员：} 从事高分子、蛋白质、药物分子等体系MD模拟的科研工作者
-    \item \textbf{计算化学与生物物理学者：} 需要深度分析分子体系结构-功能关系的研究人员
-    \item \textbf{材料科学研究者：} 专注于高分子材料、生物材料自组装行为研究的学者
-    \item \textbf{药物设计与生物医学工程：} 从事药物载体、生物材料设计与优化的研究团队
-    \item \textbf{高等院校与科研院所：} 可用于相关专业的教学、科研项目和学位论文工作
+    \item \textbf{科研人员：} 从事化学、材料科学、生物学、药学等领域研究的学者和研究生
+    \item \textbf{学术机构：} 大学、研究所、实验室等需要进行文献调研和数据收集的机构
+    \item \textbf{图书情报人员：} 负责学术资源管理和文献服务的图书管理员和信息专家
+    \item \textbf{数据分析师：} 需要大量学术数据进行计量分析和趋势研究的专业人员
+    \item \textbf{教育工作者：} 进行学术写作指导和科研方法培训的教师和导师
 \end{itemize}
 
-用户通常需要具备分子动力学模拟基础知识、Python程序使用经验，以及相关领域的专业背景。
+用户通常需要具备基础的计算机操作技能，了解学术文献检索的基本概念，但对于编程技能没有强制要求。
 
 \subsection{软件部署与技术支持}
 \label{ssec:intro_deployment_support}
-本软件基于跨平台的Python生态系统开发，支持Linux、macOS和Windows等主流操作系统。软件采用开源协议发布，用户可通过GitHub平台获取源代码和相关文档。
+本软件基于跨平台的Python生态系统开发，支持Linux、macOS和Windows等主流操作系统。软件提供简单的部署方式和完善的文档支持。
 
 \textbf{技术要求：}
 \begin{itemize}
-    \item Python 3.8及以上版本
-    \item NumPy、SciPy、MDAnalysis等科学计算库
-    \item GROMACS分析工具（用于部分分析功能）
-    \item 推荐8GB以上内存用于大规模轨迹分析
+    \item Python 3.9及以上版本
+    \item Chrome浏览器及ChromeDriver（自动下载）
+    \item 现代Web浏览器（用于访问Web界面）
+    \item 推荐4GB以上内存用于正常运行
 \end{itemize}
 
 \textbf{获取方式：}
-软件源代码托管于GitHub平台：\url{https://github.com/gxf1212/HA_OP_delivery}
+软件源代码托管于GitHub平台，用户可通过克隆仓库或下载发布包的方式获取。
 
-如在使用过程中遇到技术问题，用户可通过GitHub Issues页面提交反馈，或联系开发团队获得技术支持。
+\textbf{技术支持：}
+提供完整的文档系统，包括安装指南、使用说明、API文档和常见问题解答。用户可通过GitHub Issues页面提交技术问题和功能建议。
+
+\subsection{法律合规与使用限制}
+\label{ssec:intro_legal_compliance}
+本软件专为学生、学者、教育工作者和研究人员设计，用于学术研究、教育和数据收集目的。
+
+\textbf{允许用途：}
+\begin{itemize}
+    \item 学术研究和教育目的
+    \item 个人学习和技能提升
+    \item 非商业性的数据收集和分析
+\end{itemize}
+
+\textbf{使用限制：}
+\begin{itemize}
+    \item 禁止商业用途，除非获得明确许可
+    \item 必须遵守ACS出版物的服务条款和使用政策
+    \item 不得用于违反版权法或相关法律法规的活动
+    \item 用户需自行承担使用软件的法律责任
+\end{itemize}
+
+\textbf{免责声明：}
+本软件仅供教育和研究目的使用。开发者不对软件使用可能导致的任何法律问题承担责任。用户在使用软件前应仔细阅读并遵守相关法律法规和网站服务条款。
 
 \subsection{文档结构说明}
 \label{ssec:document_structure}
 本文档按照软件功能模块和使用流程组织，主要包括：
 \begin{itemize}
     \item \textbf{第2节}：软件安装配置与环境准备
-    \item \textbf{第3节}：核心技术特性与架构设计
-    \item \textbf{第4节}：单轨迹分析工具详细使用说明
-    \item \textbf{第5节}：多组对比分析功能与应用实例
-    \item \textbf{第6节}：建模与仿真辅助工具
+    \item \textbf{第3节}：核心功能使用方法与操作指南
+    \item \textbf{第4节}：系统架构设计与技术实现
 \end{itemize}
 
-每个章节都包含详细的使用说明、参数配置指南和实际应用示例，帮助用户快速掌握软件的使用方法。
+每个章节都包含详细的使用说明、技术架构介绍和实际应用示例，帮助用户全面了解软件的功能特性和使用方法。

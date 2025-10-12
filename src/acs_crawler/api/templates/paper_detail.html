@@ -85,12 +85,30 @@
 
                             <dt class="col-sm-5">Crawled:</dt>
                             <dd class="col-sm-7">{{ paper.crawled_at.strftime('%Y-%m-%d %H:%M') }}</dd>
+
+                            <dt class="col-sm-5">Access:</dt>
+                            <dd class="col-sm-7">
+                                {% if paper.metadata.is_open_access %}
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-unlock-fill"></i> Open Access
+                                </span>
+                                {% else %}
+                                <span class="badge bg-secondary">
+                                    <i class="bi bi-lock-fill"></i> Subscribed
+                                </span>
+                                {% endif %}
+                            </dd>
                         </dl>
 
                         <div class="d-grid gap-2 mt-3">
                             <a href="{{ paper.metadata.url }}" class="btn btn-primary" target="_blank">
                                 <i class="bi bi-box-arrow-up-right"></i> View on ACS
                             </a>
+                            {% if paper.metadata.oa_pdf_url %}
+                            <a href="{{ paper.metadata.oa_pdf_url }}" class="btn btn-success" target="_blank">
+                                <i class="bi bi-file-earmark-pdf"></i> Download PDF (OA)
+                            </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

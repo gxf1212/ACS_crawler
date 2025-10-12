@@ -276,68 +276,95 @@ async def list_papers() -> List[PaperResponse]:
     return [paper_to_response(paper) for paper in papers]
 
 
-@app.get("/api/papers/export/csv")
-async def export_papers_csv():
-    """Export all papers to CSV format.
+@app.get("/api/papers/export/xlsx")
+async def export_papers_xlsx():
+    """Export all papers to Excel (XLSX) format.
 
     Returns:
-        CSV file with all paper metadata
+        Excel file with all paper metadata
     """
-    import csv
-    from io import StringIO
+    from io import BytesIO
     from fastapi.responses import StreamingResponse
+    from openpyxl import Workbook
+    from openpyxl.styles import Font, PatternFill, Alignment
 
     try:
         papers = crawler_service.list_all_papers()
 
-        # Create CSV in memory with UTF-8 BOM for Excel compatibility
-        output = StringIO()
-        # Write BOM for Excel to recognize UTF-8
-        output.write('\ufeff')
+        # Create workbook
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "ACS Papers"
 
-        writer = csv.writer(output, quoting=csv.QUOTE_MINIMAL)
+        # Define header style
+        header_font = Font(bold=True, color="FFFFFF")
+        header_fill = PatternFill(start_color="366092", end_color="366092", fill_type="solid")
+        header_alignment = Alignment(horizontal="center", vertical="center")
 
         # Write header
-        writer.writerow([
+        headers = [
             'DOI', 'Title', 'Authors', 'Journal', 'Volume', 'Issue', 'Pages',
-            'Publication Date', 'Abstract', 'Keywords', 'URL', 'Crawled At'
-        ])
+            'Publication Date', 'Open Access', 'PDF URL', 'Abstract', 'Keywords', 'URL', 'Crawled At'
+        ]
+
+        for col_num, header in enumerate(headers, 1):
+            cell = ws.cell(row=1, column=col_num, value=header)
+            cell.font = header_font
+            cell.fill = header_fill
+            cell.alignment = header_alignment
 
         # Write data
-        for paper in papers:
+        for row_num, paper in enumerate(papers, 2):
             # Join authors with semicolon + space
             authors_str = '; '.join([author.name for author in paper.metadata.authors])
             # Join keywords with semicolon + space
             keywords_str = '; '.join(paper.metadata.keywords) if paper.metadata.keywords else ''
+            # Open Access status
+            oa_status = 'Yes' if paper.metadata.is_open_access else 'No'
 
-            writer.writerow([
-                paper.metadata.doi or '',
-                paper.metadata.title or '',
-                authors_str,
-                paper.metadata.journal or '',
-                paper.metadata.volume or '',
-                paper.metadata.issue or '',
-                paper.metadata.pages or '',
-                paper.metadata.publication_date or '',
-                paper.metadata.abstract or '',
-                keywords_str,
-                paper.metadata.url or '',
-                paper.crawled_at.isoformat()
-            ])
+            ws.cell(row=row_num, column=1, value=paper.metadata.doi or '')
+            ws.cell(row=row_num, column=2, value=paper.metadata.title or '')
+            ws.cell(row=row_num, column=3, value=authors_str)
+            ws.cell(row=row_num, column=4, value=paper.metadata.journal or '')
+            ws.cell(row=row_num, column=5, value=paper.metadata.volume or '')
+            ws.cell(row=row_num, column=6, value=paper.metadata.issue or '')
+            ws.cell(row=row_num, column=7, value=paper.metadata.pages or '')
+            ws.cell(row=row_num, column=8, value=paper.metadata.publication_date or '')
+            ws.cell(row=row_num, column=9, value=oa_status)
+            ws.cell(row=row_num, column=10, value=paper.metadata.oa_pdf_url or '')
+            ws.cell(row=row_num, column=11, value=paper.metadata.abstract or '')
+            ws.cell(row=row_num, column=12, value=keywords_str)
+            ws.cell(row=row_num, column=13, value=paper.metadata.url or '')
+            ws.cell(row=row_num, column=14, value=paper.crawled_at.isoformat())
 
-        # Return CSV with UTF-8 encoding
+        # Auto-adjust column widths
+        for col in ws.columns:
+            max_length = 0
+            column = col[0].column_letter
+            for cell in col:
+                try:
+                    if cell.value:
+                        max_length = max(max_length, len(str(cell.value)))
+                except:
+                    pass
+            adjusted_width = min(max_length + 2, 80)  # Cap at 80 for readability
+            ws.column_dimensions[column].width = adjusted_width
+
+        # Save to BytesIO
+        output = BytesIO()
+        wb.save(output)
         output.seek(0)
+
         return StreamingResponse(
             iter([output.getvalue()]),
-            media_type="text/csv; charset=utf-8",
+            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             headers={
-                "Content-Disposition": "attachment; filename=acs_papers.csv",
-                "Content-Type": "text/csv; charset=utf-8"
+                "Content-Disposition": "attachment; filename=acs_papers.xlsx"
             }
         )
     except Exception as e:
-        logger.error(f"Failed to export papers: {e}")
-        raise HTTPException(status_code=500, detail="Failed to export papers")
+        logger.error(f"Failed to export papers to Excel: {e}")
+        raise HTTPException(status_code=500, detail="Failed to export papers to Excel")
 
 
 @app.get("/api/papers/{paper_id:path}", response_model=PaperResponse)

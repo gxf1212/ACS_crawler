@@ -100,14 +100,19 @@ Get Paper Details
 
 Replace {doi} with URL-encoded DOI (e.g., ``10.1021/jacs.1c00001``).
 
-Export to CSV
-~~~~~~~~~~~~~
+Export to Excel
+~~~~~~~~~~~~~~~
 
 ::
 
-    curl http://localhost:8000/api/papers/export/csv -o papers.csv
+    curl http://localhost:8000/api/papers/export/xlsx -o papers.xlsx
 
-This downloads all papers as a CSV file.
+This downloads all papers as an Excel (XLSX) file with:
+
+* Professionally formatted headers (styled with colors)
+* Auto-adjusted column widths for better readability
+* Native Excel compatibility
+* Proper handling of comma-separated values (authors, keywords)
 
 Statistics API
 --------------

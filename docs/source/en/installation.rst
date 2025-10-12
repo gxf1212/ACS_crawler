@@ -29,57 +29,7 @@ Step 1: Install Python
 Download from https://www.python.org/downloads/ and run the installer.
 Make sure to check "Add Python to PATH" during installation.
 
-Step 2: Install Chrome Browser
--------------------------------
-
-The application requires Chrome browser for web scraping.
-
-**Ubuntu/Debian**::
-
-    # Download Chrome
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-
-    # Install Chrome
-    sudo apt install ./google-chrome-stable_current_amd64.deb
-
-    # Verify installation
-    google-chrome --version
-
-**CentOS/RHEL/Fedora**::
-
-    # Add Google Chrome repository
-    sudo dnf install fedora-workstation-repositories
-    sudo dnf config-manager --set-enabled google-chrome
-
-    # Install Chrome
-    sudo dnf install google-chrome-stable
-
-    # Or download directly
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-    sudo dnf install google-chrome-stable_current_x86_64.rpm
-
-**macOS**::
-
-    # Using Homebrew Cask
-    brew install --cask google-chrome
-
-    # Or download from https://www.google.com/chrome/
-
-**Windows**:
-
-Download and install from https://www.google.com/chrome/
-
-**Headless Linux Servers**:
-
-For servers without a display (e.g., cloud VMs), you need X11 libraries::
-
-    # Ubuntu/Debian
-    sudo apt install xvfb libxi6 libgconf-2-4
-
-    # CentOS/RHEL
-    sudo yum install xorg-x11-server-Xvfb libXi libXinerama
-
-Step 3: Install ACS Crawler
+Step 2: Install ACS Crawler
 ----------------------------
 
 Clone the Repository
@@ -129,6 +79,56 @@ This will install:
 * **BeautifulSoup4**: HTML parsing
 * **SQLite**: Database (built-in with Python)
 * **Uvicorn**: ASGI server
+
+Step 3: Install Chrome Browser
+-------------------------------
+
+The application requires Chrome browser for web scraping.
+
+**Ubuntu/Debian**::
+
+    # Download Chrome
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+    # Install Chrome
+    sudo apt install ./google-chrome-stable_current_amd64.deb
+
+    # Verify installation
+    google-chrome --version
+
+**CentOS/RHEL/Fedora**::
+
+    # Add Google Chrome repository
+    sudo dnf install fedora-workstation-repositories
+    sudo dnf config-manager --set-enabled google-chrome
+
+    # Install Chrome
+    sudo dnf install google-chrome-stable
+
+    # Or download directly
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+    sudo dnf install google-chrome-stable_current_x86_64.rpm
+
+**macOS**::
+
+    # Using Homebrew Cask
+    brew install --cask google-chrome
+
+    # Or download from https://www.google.com/chrome/
+
+**Windows**:
+
+Download and install from https://www.google.com/chrome/
+
+**Headless Linux Servers**:
+
+For servers without a display (e.g., cloud VMs), you need X11 libraries::
+
+    # Ubuntu/Debian
+    sudo apt install xvfb libxi6 libgconf-2-4
+
+    # CentOS/RHEL
+    sudo yum install xorg-x11-server-Xvfb libXi libXinerama
 
 Step 4: ChromeDriver Setup
 ---------------------------
@@ -260,16 +260,161 @@ Windows
 Docker Installation (Alternative)
 ----------------------------------
 
-For containerized deployment::
+Docker provides an isolated, reproducible environment with all dependencies pre-installed.
 
-    # Pull image (when available)
-    docker pull ghcr.io/gxf1212/acs_crawler:latest
+Prerequisites
+~~~~~~~~~~~~~
 
-    # Or build from source
-    docker build -t acs_crawler .
+* **Docker**: 20.10 or higher (`Install Docker <https://docs.docker.com/get-docker/>`_)
+* **Docker Compose**: 2.0 or higher (usually included with Docker Desktop)
+
+Option 1: Using Docker Compose (Recommended)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Quick Start**::
+
+    # Clone repository
+    git clone https://github.com/gxf1212/ACS_crawler.git
+    cd ACS_crawler
+
+    # Start the application
+    docker-compose up -d
+
+    # View logs
+    docker-compose logs -f
+
+    # Stop the application
+    docker-compose down
+
+**What it does:**
+
+* Builds Docker image with Chrome and all dependencies
+* Creates persistent volumes for data and logs
+* Starts container on port 8000
+* Automatic restart on failure
+* Resource limits (2GB RAM, 2 CPUs)
+
+**Access the application:**
+
+Open http://localhost:8000 in your browser
+
+Option 2: Using Docker CLI
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Build the image**::
+
+    docker build -t acs-crawler:latest .
+
+**Run the container**::
+
+    # Create data directory (first time only)
+    mkdir -p data logs
 
     # Run container
-    docker run -p 8000:8000 -v $(pwd)/data:/app/data acs_crawler
+    docker run -d \
+      --name acs-crawler \
+      -p 8000:8000 \
+      -v $(pwd)/data:/app/data \
+      -v $(pwd)/logs:/app/logs \
+      --restart unless-stopped \
+      acs-crawler:latest
+
+**Manage container**::
+
+    # View logs
+    docker logs -f acs-crawler
+
+    # Stop container
+    docker stop acs-crawler
+
+    # Start container
+    docker start acs-crawler
+
+    # Remove container
+    docker rm -f acs-crawler
+
+Option 3: Pull from GitHub Container Registry
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Pull pre-built image** (when available)::
+
+    # Pull latest image
+    docker pull ghcr.io/gxf1212/acs_crawler:latest
+
+    # Run container
+    docker run -d \
+      --name acs-crawler \
+      -p 8000:8000 \
+      -v $(pwd)/data:/app/data \
+      -v $(pwd)/logs:/app/logs \
+      ghcr.io/gxf1212/acs_crawler:latest
+
+**Note**: GHCR images are published automatically via GitHub Actions on each release.
+
+Docker Configuration
+~~~~~~~~~~~~~~~~~~~~
+
+**Environment Variables**:
+
+You can customize the container behavior with environment variables::
+
+    docker run -d \
+      -e PYTHONUNBUFFERED=1 \
+      -e CHROME_BIN=/usr/bin/google-chrome \
+      -p 8000:8000 \
+      acs-crawler:latest
+
+**Port Mapping**:
+
+Change the host port if 8000 is in use::
+
+    docker run -d -p 8080:8000 acs-crawler:latest
+
+**Volume Mounts**:
+
+* ``./data:/app/data`` - Persist database
+* ``./logs:/app/logs`` - Persist log files
+
+**Resource Limits** (in docker-compose.yml):
+
+.. code-block:: yaml
+
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+
+Docker Troubleshooting
+~~~~~~~~~~~~~~~~~~~~~~
+
+**Container exits immediately**::
+
+    # Check logs
+    docker logs acs-crawler
+
+**Port already in use**::
+
+    # Change port mapping
+    docker run -p 8080:8000 ...
+
+**Permission denied on data directory**::
+
+    # Fix permissions
+    sudo chown -R 1000:1000 data logs
+
+**Chrome not working in Docker**::
+
+    # Ensure you're using the provided Dockerfile
+    # It includes all necessary Chrome dependencies
+
+**Rebuild image after code changes**::
+
+    # With docker-compose
+    docker-compose up -d --build
+
+    # With Docker CLI
+    docker build -t acs-crawler:latest . --no-cache
 
 Troubleshooting
 ---------------

@@ -80,6 +80,8 @@ class PaperMetadata:
         pages: Page range
         keywords: List of keywords
         url: Full URL to the paper
+        is_open_access: Whether the paper is Open Access
+        oa_pdf_url: Direct PDF download URL (for Open Access papers)
     """
 
     title: str
@@ -93,6 +95,8 @@ class PaperMetadata:
     issue: Optional[str] = None
     pages: Optional[str] = None
     keywords: List[str] = field(default_factory=list)
+    is_open_access: bool = False
+    oa_pdf_url: Optional[str] = None
 
 
 @dataclass

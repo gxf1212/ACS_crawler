@@ -49,6 +49,8 @@ class SQLiteStorage:
                     volume TEXT,
                     issue TEXT,
                     pages TEXT,
+                    is_open_access INTEGER DEFAULT 0,
+                    oa_pdf_url TEXT,
                     crawled_at TEXT NOT NULL,
                     raw_html TEXT
                 )
@@ -102,6 +104,22 @@ class SQLiteStorage:
                 # Column already exists
                 pass
 
+            # Add is_open_access column if it doesn't exist (for existing databases)
+            try:
+                cursor.execute("ALTER TABLE papers ADD COLUMN is_open_access INTEGER DEFAULT 0")
+                self.logger.info("Added is_open_access column to papers table")
+            except sqlite3.OperationalError:
+                # Column already exists
+                pass
+
+            # Add oa_pdf_url column if it doesn't exist (for existing databases)
+            try:
+                cursor.execute("ALTER TABLE papers ADD COLUMN oa_pdf_url TEXT")
+                self.logger.info("Added oa_pdf_url column to papers table")
+            except sqlite3.OperationalError:
+                # Column already exists
+                pass
+
             # Create indexes for better query performance
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_papers_journal ON papers(journal)")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_papers_date ON papers(publication_date)")
@@ -130,8 +148,8 @@ class SQLiteStorage:
                 cursor.execute("""
                     INSERT OR REPLACE INTO papers
                     (paper_id, title, doi, url, abstract, publication_date,
-                     journal, volume, issue, pages, crawled_at, raw_html)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                     journal, volume, issue, pages, is_open_access, oa_pdf_url, crawled_at, raw_html)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     paper.paper_id,
                     paper.metadata.title,
@@ -143,6 +161,8 @@ class SQLiteStorage:
                     paper.metadata.volume,
                     paper.metadata.issue,
                     paper.metadata.pages,
+                    1 if paper.metadata.is_open_access else 0,
+                    paper.metadata.oa_pdf_url,
                     paper.crawled_at.isoformat(),
                     paper.raw_html,
                 ))
@@ -221,6 +241,8 @@ class SQLiteStorage:
                     issue=row['issue'],
                     pages=row['pages'],
                     keywords=keywords,
+                    is_open_access=bool(row.get('is_open_access', 0)),
+                    oa_pdf_url=row.get('oa_pdf_url'),
                 )
 
                 return Paper(

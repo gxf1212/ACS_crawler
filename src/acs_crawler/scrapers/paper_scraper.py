@@ -71,6 +71,8 @@ class PaperScraper:
             publication_date = self._extract_publication_date(soup)
             journal_info = self._extract_journal_info(soup)
             keywords = self._extract_keywords(soup)
+            is_open_access = self._extract_open_access_status(soup)
+            oa_pdf_url = self._extract_pdf_url(doi, is_open_access)
 
             metadata = PaperMetadata(
                 title=title,
@@ -84,6 +86,8 @@ class PaperScraper:
                 issue=journal_info.get("issue"),
                 pages=journal_info.get("pages"),
                 keywords=keywords,
+                is_open_access=is_open_access,
+                oa_pdf_url=oa_pdf_url,
             )
 
             self.logger.info(f"Successfully extracted metadata for DOI: {doi}")
@@ -244,6 +248,40 @@ class PaperScraper:
                 keywords = [link.get_text(strip=True) for link in keyword_links]
 
         return keywords
+
+    def _extract_open_access_status(self, soup) -> bool:
+        """Extract Open Access status from access control icons.
+
+        Returns:
+            True if the paper is Open Access, False otherwise
+        """
+        # Look for access control images with "Open Access" alt text
+        access_icons = soup.find_all("img", {"class": "access__control--img"})
+        for icon in access_icons:
+            alt_text = icon.get("alt", "").lower()
+            if "open access" in alt_text or "acs authorchoice" in alt_text:
+                return True
+
+        # Alternative: check for open access badges or labels
+        oa_labels = soup.find_all(string=lambda text: text and "open access" in text.lower())
+        if oa_labels:
+            return True
+
+        return False
+
+    def _extract_pdf_url(self, doi: str, is_open_access: bool) -> Optional[str]:
+        """Generate PDF download URL for Open Access papers.
+
+        Args:
+            doi: Paper DOI
+            is_open_access: Whether the paper is Open Access
+
+        Returns:
+            PDF download URL if Open Access, None otherwise
+        """
+        if is_open_access and doi:
+            return f"https://pubs.acs.org/doi/pdf/{doi}"
+        return None
 
 
 if __name__ == "__main__":

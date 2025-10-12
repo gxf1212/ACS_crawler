@@ -49,8 +49,8 @@
         <p class="text-muted">Browse and filter collected papers</p>
     </div>
     <div class="col-lg-6 d-flex align-items-center justify-content-end flex-wrap gap-2">
-        <a href="/api/papers/export/csv" class="btn btn-outline-success btn-lg px-4 py-2" download style="font-size: 1.1rem;">
-            <i class="bi bi-download"></i> Export CSV
+        <a href="/api/papers/export/xlsx" class="btn btn-outline-success btn-lg px-4 py-2" download style="font-size: 1.1rem;">
+            <i class="bi bi-file-earmark-spreadsheet"></i> Export Excel
         </a>
         <button class="btn btn-outline-primary btn-lg px-4 py-2" data-bs-toggle="modal" data-bs-target="#chartsModal" style="font-size: 1.1rem;">
             <i class="bi bi-bar-chart-line"></i> Statistics
@@ -199,6 +199,11 @@
                                 {% if paper.metadata.abstract %}
                                 <span class="badge bg-success mb-2">
                                     <i class="bi bi-check-circle"></i> Abstract
+                                </span>
+                                {% endif %}
+                                {% if paper.metadata.is_open_access %}
+                                <span class="badge bg-warning text-dark mb-2" title="Open Access">
+                                    <i class="bi bi-unlock-fill"></i> Open Access
                                 </span>
                                 {% endif %}
                                 {% if paper.metadata.keywords %}

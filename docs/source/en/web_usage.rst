@@ -99,13 +99,20 @@ Features:
 Exporting Data
 --------------
 
-Export papers to CSV:
+Export papers to Excel format:
 
 1. Navigate to Papers page
-2. Click "Export CSV" button
-3. Save the file
+2. Click "Export Excel" button
+3. Save the .xlsx file
 
-CSV includes: DOI, title, authors, journal, volume, issue, pages, publication date, abstract, keywords, URL.
+Excel format provides:
+
+* Professionally formatted headers (styled with colors)
+* Auto-adjusted column widths for better readability
+* Native Excel compatibility (no encoding issues)
+* Proper handling of comma-separated values (authors, keywords)
+
+The export includes: DOI, title, authors, journal, volume, issue, pages, publication date, abstract, keywords, URL, and crawl timestamp.
 
 Best Practices
 --------------
