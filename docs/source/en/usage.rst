@@ -7,7 +7,16 @@ Web Interface
 Dashboard
 ~~~~~~~~~
 
-The dashboard provides:
+The dashboard provides an overview of your crawling activity:
+
+.. figure:: /_static/index.png
+   :alt: Dashboard Screenshot
+   :align: center
+   :width: 90%
+
+   Main dashboard with statistics, charts, and quick access buttons
+
+Features:
 
 * **Statistics Cards**: Total papers, jobs, completion rates
 * **Interactive Charts**: Papers by journal, top authors, timeline, publication years
@@ -38,6 +47,17 @@ Examples:
 Browsing Papers
 ~~~~~~~~~~~~~~~
 
+Navigate to the **Papers** page to browse and filter collected papers:
+
+.. figure:: /_static/papers.png
+   :alt: Papers List Screenshot
+   :align: center
+   :width: 90%
+
+   Papers page with advanced filtering and search
+
+How to use:
+
 1. Navigate to **Papers** page
 2. Use filters:
 
@@ -49,10 +69,26 @@ Browsing Papers
 3. Sort by date, title, or journal
 4. Click any paper for full details
 
+.. figure:: /_static/paper_detail.png
+   :alt: Paper Detail Screenshot
+   :align: center
+   :width: 90%
+
+   Detailed paper view with complete metadata
+
 Managing Jobs
 ~~~~~~~~~~~~~
 
-In the **Jobs** page:
+Monitor and manage all crawling jobs in the **Jobs** page:
+
+.. figure:: /_static/jobs.png
+   :alt: Jobs Page Screenshot
+   :align: center
+   :width: 90%
+
+   Jobs management page with status tracking and controls
+
+Features:
 
 * View all jobs with status indicators
 * Track progress (crawled/total papers)
