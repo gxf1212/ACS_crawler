@@ -45,6 +45,7 @@ data/*
 # Sphinx documentation
 docs/_build/
 docs/_static/
+!docs/source/_static/
 docs/_templates/
 
 # Testing
@@ -70,9 +71,10 @@ test_*.py
 *.jpg
 *.jpeg
 
-# Except screenshots for README
+# Except screenshots for README and docs
 !screenshots/*.png
 !screenshots/*.jpg
+!docs/source/_static/*.png
 
 # Temporary files
 tmp/
