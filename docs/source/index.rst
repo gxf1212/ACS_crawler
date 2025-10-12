@@ -145,7 +145,6 @@ Table of Contents
 
    en/web_usage
    en/api_usage
-   en/troubleshooting
 
 .. toctree::
    :maxdepth: 2
@@ -165,7 +164,6 @@ Table of Contents
    zh/quickstart
    zh/web_usage
    zh/api_usage
-   zh/troubleshooting
    zh/api
    zh/architecture
    zh/contributing
