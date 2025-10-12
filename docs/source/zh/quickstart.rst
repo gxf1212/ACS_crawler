@@ -15,7 +15,7 @@
 
 1. 克隆仓库::
 
-    git clone <repository-url>
+    git clone https://github.com/gxf1212/ACS_crawler.git
     cd ACS_crawler
 
 2. 安装依赖::

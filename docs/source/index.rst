@@ -25,41 +25,53 @@ A professional web-based crawler for American Chemical Society (ACS) papers with
 .. grid:: 2
    :gutter: 3
 
-   .. grid-item-card:: 🚀 Quick Start
+   .. grid-item-card:: 🚀 Quick Start / 快速开始
       :link: en/quickstart
       :link-type: doc
 
       Get started in minutes with installation and your first crawl job.
 
-   .. grid-item-card:: 📖 User Guide
+      几分钟内完成安装并开始第一个爬取任务。
+
+   .. grid-item-card:: 📖 User Guide / 使用指南
       :link: en/usage
       :link-type: doc
 
       Learn how to use the web interface, API, and advanced features.
 
-   .. grid-item-card:: 🛠️ Installation
+      学习如何使用 Web 界面、API 和高级功能。
+
+   .. grid-item-card:: 🛠️ Installation / 安装
       :link: en/installation
       :link-type: doc
 
       Detailed setup instructions for different environments.
 
-   .. grid-item-card:: 🔌 API Reference
+      不同环境下的详细安装说明。
+
+   .. grid-item-card:: 🔌 API Reference / API 参考
       :link: en/api
       :link-type: doc
 
       Complete REST API documentation and examples.
 
-   .. grid-item-card:: 🏗️ Architecture
+      完整的 REST API 文档和示例。
+
+   .. grid-item-card:: 🏗️ Architecture / 架构
       :link: en/architecture
       :link-type: doc
 
       Understand the project structure and design.
 
-   .. grid-item-card:: 🐛 Troubleshooting
+      了解项目结构和设计。
+
+   .. grid-item-card:: 🐛 Troubleshooting / 故障排除
       :link: en/troubleshooting
       :link-type: doc
 
       Common issues and solutions.
+
+      常见问题和解决方案。
 
 Features
 --------

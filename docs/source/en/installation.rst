@@ -13,7 +13,7 @@ Basic Installation
 
 Install from source::
 
-    git clone <repository-url>
+    git clone https://github.com/gxf1212/ACS_crawler.git
     cd ACS_crawler
     pip install -r requirements.txt
 

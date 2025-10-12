@@ -6,7 +6,7 @@ We welcome contributions! This guide will help you get started.
 Development Setup
 -----------------
 
-1. Fork the repository
+1. Fork the repository on GitHub: https://github.com/gxf1212/ACS_crawler
 2. Clone your fork::
 
     git clone https://github.com/YOUR-USERNAME/ACS_crawler.git

@@ -15,7 +15,7 @@ Installation
 
 1. Clone the repository::
 
-    git clone <repository-url>
+    git clone https://github.com/gxf1212/ACS_crawler.git
     cd ACS_crawler
 
 2. Install dependencies::
