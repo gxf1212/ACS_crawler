@@ -98,13 +98,13 @@ Features:
 Exporting Data
 ~~~~~~~~~~~~~~
 
-Export papers to CSV:
+Export papers to Excel (XLSX):
 
 1. Navigate to Papers page
-2. Click "Export CSV" button
+2. Click "Export Excel" button
 3. Save the file
 
-CSV includes: DOI, title, authors, journal, volume, issue, pages, publication date, abstract, keywords, URL.
+Excel file includes: DOI, title, authors, journal, volume, issue, pages, publication date, Open Access status, PDF URL, abstract, keywords, URL.
 
 API Usage
 ---------
@@ -129,8 +129,8 @@ Example API calls::
     # List all papers
     curl http://localhost:8000/api/papers
 
-    # Export to CSV
-    curl http://localhost:8000/api/papers/export/csv -o papers.csv
+    # Export to Excel
+    curl http://localhost:8000/api/papers/export/xlsx -o papers.xlsx
 
 See :doc:`api` for complete API reference.
 

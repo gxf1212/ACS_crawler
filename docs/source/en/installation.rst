@@ -419,76 +419,18 @@ Docker Troubleshooting
 Troubleshooting
 ---------------
 
-Chrome not found
-~~~~~~~~~~~~~~~~
+If you encounter any issues during installation, please refer to the :doc:`troubleshooting` guide for detailed solutions.
 
-**Error**: ``Chrome binary not found``
+Common installation issues include:
 
-**Solution**:
+* Chrome/ChromeDriver not found or version mismatch
+* Port 8000 already in use
+* Permission denied errors
+* Import/dependency errors
+* Database locked errors
 
-* Verify Chrome installation: ``google-chrome --version`` (Linux/macOS) or check "Add or Remove Programs" (Windows)
-* On Linux servers, ensure X11 libraries are installed: ``sudo apt install xvfb``
+For help:
 
-ChromeDriver version mismatch
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**Error**: ``ChromeDriver version X.Y doesn't match Chrome version A.B``
-
-**Solution**:
-
-* Use auto-download (default, recommended)
-* Or manually download matching version from https://chromedriver.chromium.org/downloads
-* Check versions: ``google-chrome --version`` and ``chromedriver --version``
-
-Port 8000 already in use
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**Error**: ``Address already in use``
-
-**Solution**:
-
-Change port in ``run.py``::
-
-    uvicorn.run(app, host="0.0.0.0", port=8080)  # Use 8080 instead
-
-Permission denied (ChromeDriver)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**Error**: ``Permission denied: chromedriver``
-
-**Solution (Linux/macOS)**::
-
-    chmod +x /path/to/chromedriver
-
-Import errors
-~~~~~~~~~~~~~
-
-**Error**: ``ModuleNotFoundError``
-
-**Solution**::
-
-    # Ensure you're in the correct environment
-    conda activate acs_crawler
-
-    # Reinstall dependencies
-    pip install -r requirements.txt --force-reinstall
-
-Database locked
-~~~~~~~~~~~~~~~
-
-**Error**: ``database is locked``
-
-**Solution**:
-
-* Ensure only one instance is running
-* Check for stale lock files in ``data/``
-* Restart the application
-
-Getting Help
-------------
-
-If you encounter issues not covered here:
-
-* 📚 Check the `Troubleshooting Guide <troubleshooting.html>`_
+* 📚 Check the :doc:`troubleshooting` guide
 * 🐛 `Report an Issue <https://github.com/gxf1212/ACS_crawler/issues>`_
 * 💬 `Ask in Discussions <https://github.com/gxf1212/ACS_crawler/discussions>`_
