@@ -24,6 +24,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'myst_parser',
+    'sphinx_design',
 ]
 
 templates_path = ['_templates']
