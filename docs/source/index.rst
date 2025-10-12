@@ -33,13 +33,13 @@ A professional web-based crawler for American Chemical Society (ACS) papers with
 
       几分钟内完成安装并开始第一个爬取任务。
 
-   .. grid-item-card:: 📖 User Guide / 使用指南
-      :link: en/usage
+   .. grid-item-card:: 🖥️ Web Interface / Web 界面
+      :link: en/web_usage
       :link-type: doc
 
-      Learn how to use the web interface, API, and advanced features.
+      Learn how to use the dashboard, browse papers, and manage jobs.
 
-      学习如何使用 Web 界面、API 和高级功能。
+      学习如何使用仪表板、浏览论文和管理任务。
 
    .. grid-item-card:: 🛠️ Installation / 安装
       :link: en/installation
@@ -49,29 +49,13 @@ A professional web-based crawler for American Chemical Society (ACS) papers with
 
       不同环境下的详细安装说明。
 
-   .. grid-item-card:: 🔌 API Reference / API 参考
-      :link: en/api
+   .. grid-item-card:: 🔌 API Usage / API 使用
+      :link: en/api_usage
       :link-type: doc
 
-      Complete REST API documentation and examples.
+      Programmatic access with REST API and Python examples.
 
-      完整的 REST API 文档和示例。
-
-   .. grid-item-card:: 🏗️ Architecture / 架构
-      :link: en/architecture
-      :link-type: doc
-
-      Understand the project structure and design.
-
-      了解项目结构和设计。
-
-   .. grid-item-card:: 🐛 Troubleshooting / 故障排除
-      :link: en/troubleshooting
-      :link-type: doc
-
-      Common issues and solutions.
-
-      常见问题和解决方案。
+      REST API 和 Python 示例的编程访问。
 
 Features / 功能特性
 -------------------
@@ -115,42 +99,37 @@ Features / 功能特性
 
       异步爬取，进度追踪
 
-Language / 语言
----------------
+Documentation / 文档
+--------------------
 
 .. tab-set::
 
-   .. tab-item:: English
+   .. tab-item:: Usage / 使用
 
       .. toctree::
          :maxdepth: 1
-         :hidden:
-         :caption: English Documentation
 
          en/quickstart
-         en/installation
-         en/usage
-         en/api
-         en/architecture
+         en/web_usage
+         en/api_usage
          en/troubleshooting
-         en/contributing
-         en/license
 
-   .. tab-item:: 中文
+   .. tab-item:: Setup / 设置
 
       .. toctree::
          :maxdepth: 1
-         :hidden:
-         :caption: 中文文档
 
-         zh/quickstart
-         zh/installation
-         zh/usage
-         zh/api
-         zh/architecture
-         zh/troubleshooting
-         zh/contributing
-         zh/license
+         en/installation
+         en/api
+
+   .. tab-item:: Development / 开发
+
+      .. toctree::
+         :maxdepth: 1
+
+         en/architecture
+         en/contributing
+         en/license
 
 Quick Links / 快速链接
 ----------------------
@@ -181,6 +160,24 @@ Quick Links / 快速链接
    This software is for **educational and research purposes only**. Users are responsible for complying with ACS Terms of Service.
 
    本软件仅用于**教育和研究目的**。用户需自行遵守 ACS 服务条款。
+
+Language / 语言
+---------------
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: 中文文档
+
+   zh/quickstart
+   zh/web_usage
+   zh/installation
+   zh/api_usage
+   zh/troubleshooting
+   zh/api
+   zh/architecture
+   zh/contributing
+   zh/license
 
 Indices and tables
 ==================
