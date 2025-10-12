@@ -30,7 +30,7 @@
 
     http://localhost:8000
 
-您应该看到带有统计和图表的仪表板。
+就是这样！您应该看到带有统计和图表的仪表板。
 
 第一次爬取
 ----------
@@ -44,5 +44,6 @@
 ------
 
 * 阅读 :doc:`installation` 了解详细设置选项
-* 了解 :doc:`usage` 的高级功能
+* 了解 :doc:`web_usage` 和 :doc:`api_usage` 的高级功能
 * 探索 :doc:`api` 进行 API 集成
+* 参考 :doc:`troubleshooting` 解决常见问题

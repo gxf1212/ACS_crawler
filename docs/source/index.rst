@@ -164,6 +164,7 @@ Table of Contents
    zh/quickstart
    zh/web_usage
    zh/api_usage
+   zh/troubleshooting
    zh/api
    zh/architecture
    zh/contributing
