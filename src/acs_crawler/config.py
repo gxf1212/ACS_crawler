@@ -8,13 +8,9 @@ from typing import Final, Optional
 # Project paths
 PROJECT_ROOT: Final[Path] = Path(__file__).parent.parent.parent
 DATA_DIR: Final[Path] = PROJECT_ROOT / "data"
-CACHE_DIR: Final[Path] = PROJECT_ROOT / "cache"
-LOGS_DIR: Final[Path] = PROJECT_ROOT / "logs"
 
-# Ensure directories exist
+# Ensure data directory exists
 DATA_DIR.mkdir(exist_ok=True)
-CACHE_DIR.mkdir(exist_ok=True)
-LOGS_DIR.mkdir(exist_ok=True)
 
 # Scraper settings
 USER_AGENT: Final[str] = (
@@ -41,14 +37,8 @@ def setup_logging(level: int = logging.INFO) -> None:
         level: Logging level (default: logging.INFO)
     """
     log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    log_file = LOGS_DIR / "acs_crawler.log"
 
-    # File handler
-    file_handler = logging.FileHandler(log_file)
-    file_handler.setLevel(level)
-    file_handler.setFormatter(logging.Formatter(log_format))
-
-    # Console handler
+    # Console handler only
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(level)
     console_handler.setFormatter(logging.Formatter(log_format))
@@ -56,7 +46,6 @@ def setup_logging(level: int = logging.INFO) -> None:
     # Root logger configuration
     root_logger = logging.getLogger()
     root_logger.setLevel(level)
-    root_logger.addHandler(file_handler)
     root_logger.addHandler(console_handler)
 
 
