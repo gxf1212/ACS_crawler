@@ -73,35 +73,47 @@ A professional web-based crawler for American Chemical Society (ACS) papers with
 
       常见问题和解决方案。
 
-Features
---------
+Features / 功能特性
+-------------------
 
 .. grid:: 1 2 2 3
    :gutter: 2
 
-   .. grid-item-card:: 📚 43 Built-in Journals
+   .. grid-item-card:: 📚 43 Built-in Journals / 43 个内置期刊
 
       Pre-configured ACS journal list ready to use
 
-   .. grid-item-card:: ⚡ Real-time Crawling
+      预配置的 ACS 期刊列表
+
+   .. grid-item-card:: ⚡ Real-time Crawling / 实时爬取
 
       Extract papers from ACS Publications instantly
 
-   .. grid-item-card:: 🔍 Complete Metadata
+      即时从 ACS Publications 提取论文
+
+   .. grid-item-card:: 🔍 Complete Metadata / 完整元数据
 
       Title, DOI, authors, abstract, keywords, citations
 
-   .. grid-item-card:: 📊 Modern Dashboard
+      标题、DOI、作者、摘要、关键词、引用
+
+   .. grid-item-card:: 📊 Modern Dashboard / 现代化仪表板
 
       Interactive charts and statistics
 
-   .. grid-item-card:: 🎯 Advanced Filtering
+      交互式图表和统计
+
+   .. grid-item-card:: 🎯 Advanced Filtering / 高级过滤
 
       Search by title, author, journal, year
 
-   .. grid-item-card:: 🔄 Background Jobs
+      按标题、作者、期刊、年份搜索
+
+   .. grid-item-card:: 🔄 Background Jobs / 后台任务
 
       Async crawling with progress tracking
+
+      异步爬取，进度追踪
 
 Language / 语言
 ---------------
@@ -140,33 +152,35 @@ Language / 语言
          zh/contributing
          zh/license
 
-Quick Links
------------
+Quick Links / 快速链接
+----------------------
 
 .. button-link:: https://github.com/gxf1212/ACS_crawler
    :color: primary
    :outline:
 
-   :octicon:`mark-github` View on GitHub
+   :octicon:`mark-github` View on GitHub / 查看 GitHub
 
 .. button-link:: https://github.com/gxf1212/ACS_crawler/issues
    :color: secondary
    :outline:
 
-   :octicon:`issue-opened` Report Issues
+   :octicon:`issue-opened` Report Issues / 报告问题
 
 .. button-link:: https://github.com/gxf1212/ACS_crawler/discussions
    :color: secondary
    :outline:
 
-   :octicon:`comment-discussion` Discussions
+   :octicon:`comment-discussion` Discussions / 讨论
 
 ----
 
-.. admonition:: License & Usage
+.. admonition:: License & Usage / 许可证与使用
    :class: tip
 
    This software is for **educational and research purposes only**. Users are responsible for complying with ACS Terms of Service.
+
+   本软件仅用于**教育和研究目的**。用户需自行遵守 ACS 服务条款。
 
 Indices and tables
 ==================
