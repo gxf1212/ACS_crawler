@@ -99,38 +99,6 @@ Features / 功能特性
 
       异步爬取，进度追踪
 
-Documentation / 文档
---------------------
-
-.. tab-set::
-
-   .. tab-item:: Usage / 使用
-
-      .. toctree::
-         :maxdepth: 1
-
-         en/quickstart
-         en/web_usage
-         en/api_usage
-         en/troubleshooting
-
-   .. tab-item:: Setup / 设置
-
-      .. toctree::
-         :maxdepth: 1
-
-         en/installation
-         en/api
-
-   .. tab-item:: Development / 开发
-
-      .. toctree::
-         :maxdepth: 1
-
-         en/architecture
-         en/contributing
-         en/license
-
 Quick Links / 快速链接
 ----------------------
 
@@ -161,17 +129,41 @@ Quick Links / 快速链接
 
    本软件仅用于**教育和研究目的**。用户需自行遵守 ACS 服务条款。
 
-Language / 语言
----------------
+Table of Contents
+=================
 
 .. toctree::
-   :maxdepth: 1
-   :hidden:
-   :caption: 中文文档
+   :maxdepth: 2
+   :caption: Getting Started
 
+   en/installation
+   en/quickstart
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Usage
+
+   en/web_usage
+   en/api_usage
+   en/troubleshooting
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Development
+
+   en/api
+   en/architecture
+   en/contributing
+   en/license
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 中文文档
+   :hidden:
+
+   zh/installation
    zh/quickstart
    zh/web_usage
-   zh/installation
    zh/api_usage
    zh/troubleshooting
    zh/api
