@@ -28,13 +28,15 @@ ENV/
 
 # Logs
 *.log
-logs/
+logs/*
+!logs/.gitkeep
 
 # Database
 *.db
 *.sqlite
 *.sqlite3
-data/
+data/*
+!data/.gitkeep
 
 # Sphinx documentation
 docs/_build/
@@ -63,7 +65,6 @@ test_*.py
 *.png
 *.jpg
 *.jpeg
-!software-copyright/images/**
 
 # Temporary files
 tmp/
