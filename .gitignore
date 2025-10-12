@@ -70,6 +70,10 @@ test_*.py
 *.jpg
 *.jpeg
 
+# Except screenshots for README
+!screenshots/*.png
+!screenshots/*.jpg
+
 # Temporary files
 tmp/
 temp/

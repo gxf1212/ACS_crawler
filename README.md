@@ -71,14 +71,21 @@ Or read online: [Documentation](https://acs-crawler.readthedocs.io/)
 
 ### Screenshots
 
-![Dashboard](software-copyright/images/dashboard.png)
+<div align="center">
+
+![Dashboard](screenshots/index.png)
 *Dashboard with statistics and charts*
 
-![Papers](software-copyright/images/papers.png)
+![Papers](screenshots/papers.png)
 *Advanced paper filtering*
 
-![Jobs](software-copyright/images/jobs.png)
+![Paper Detail](screenshots/paper_detail.png)
+*Detailed paper view*
+
+![Jobs](screenshots/jobs.png)
 *Job management with cancellation*
+
+</div>
 
 ### License & Copyright
 
@@ -153,14 +160,21 @@ make html
 
 ### 截图
 
-![仪表板](software-copyright/images/dashboard.png)
+<div align="center">
+
+![仪表板](screenshots/index.png)
 *带统计和图表的仪表板*
 
-![论文](software-copyright/images/papers.png)
+![论文](screenshots/papers.png)
 *高级论文过滤*
 
-![任务](software-copyright/images/jobs.png)
+![论文详情](screenshots/paper_detail.png)
+*详细的论文视图*
+
+![任务](screenshots/jobs.png)
 *带取消功能的任务管理*
+
+</div>
 
 ### 许可证与版权
 
