@@ -18,6 +18,10 @@ env/
 ENV/
 .venv/
 
+# Conda/Mamba
+.conda/
+envs/
+
 # IDE
 .vscode/
 .idea/

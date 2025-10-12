@@ -31,10 +31,16 @@ By default, ChromeDriver is automatically downloaded. To use a custom path:
 Virtual Environment (Recommended)
 ----------------------------------
 
-Using venv::
+Using conda::
 
-    python -m venv venv
-    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    conda create -n acs_crawler python=3.9
+    conda activate acs_crawler
+    pip install -r requirements.txt
+
+Or using mamba (faster)::
+
+    mamba create -n acs_crawler python=3.9
+    mamba activate acs_crawler
     pip install -r requirements.txt
 
 Verifying Installation

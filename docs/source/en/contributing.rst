@@ -12,10 +12,10 @@ Development Setup
     git clone https://github.com/YOUR-USERNAME/ACS_crawler.git
     cd ACS_crawler
 
-3. Create virtual environment::
+3. Create conda environment::
 
-    python -m venv venv
-    source venv/bin/activate
+    conda create -n acs_crawler python=3.9
+    conda activate acs_crawler
 
 4. Install dependencies::
 
