@@ -27,19 +27,11 @@
                             <i class="bi bi-people"></i> Authors
                         </h5>
                         {% if paper.metadata.authors %}
-                        <ul class="list-unstyled">
+                        <p>
                             {% for author in paper.metadata.authors %}
-                            <li class="mb-1">
-                                <strong>{{ author.name }}</strong>
-                                {% if author.affiliation %}
-                                <br><small class="text-muted">{{ author.affiliation }}</small>
-                                {% endif %}
-                                {% if author.email %}
-                                <br><small class="text-muted"><i class="bi bi-envelope"></i> {{ author.email }}</small>
-                                {% endif %}
-                            </li>
+                                <strong>{{ author.name }}</strong>{% if not loop.last %}, {% endif %}
                             {% endfor %}
-                        </ul>
+                        </p>
                         {% else %}
                         <p class="text-muted">No author information available</p>
                         {% endif %}
