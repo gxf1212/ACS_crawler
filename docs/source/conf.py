@@ -40,14 +40,14 @@ html_static_path = ['_static']
 
 # Furo theme options
 html_theme_options = {
-    "light_logo": "logo-light.png",
-    "dark_logo": "logo-dark.png",
     "sidebar_hide_name": False,
     "navigation_with_keys": True,
     "top_of_page_button": "edit",
 }
 
 html_title = "ACS Paper Crawler Documentation"
+html_favicon = "_static/acs-4.svg"
+html_logo = "_static/acs-4.svg"
 
 # -- Extension configuration -------------------------------------------------
 

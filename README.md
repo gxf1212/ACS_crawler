@@ -3,13 +3,13 @@
 [![Python Version](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688.svg)](https://fastapi.tiangolo.com/)
 [![License](https://img.shields.io/badge/license-Educational-green.svg)](LICENSE)
-[![Documentation](https://img.shields.io/badge/docs-Sphinx-blue.svg)](docs/)
+[![Documentation](https://readthedocs.org/projects/acs-crawler/badge/?version=latest)](https://acs-crawler.readthedocs.io/)
 
 A professional web-based crawler for American Chemical Society (ACS) papers with modern dashboard and analytics.
 
 专业的 ACS（美国化学会）论文网络爬虫，具有现代化仪表板和分析功能。
 
-[English](#english) | [中文](#中文) | [📚 Documentation](docs/)
+[English](#english) | [中文](#中文) | [📚 Documentation](https://acs-crawler.readthedocs.io/)
 
 ---
 
@@ -46,6 +46,17 @@ http://localhost:8000
 - Chrome browser
 - ChromeDriver (auto-downloaded)
 
+### Known Limitations
+
+- **Performance**: Selenium-based (slower than HTTP-only crawlers, ~3-5s startup per job)
+- **Rate Limiting**: No automatic limits - space out jobs manually (1-2 concurrent max)
+- **Data Extraction**: Only public metadata (no paywalled content, no author affiliations)
+- **Scalability**: Sequential job processing, SQLite storage (not for production)
+- **ACS Only**: Designed for ACS journals, relies on current page structure
+- **Legal**: Users responsible for complying with ACS Terms of Service
+
+See [full documentation](https://acs-crawler.readthedocs.io/) for workarounds and best practices.
+
 ### Documentation
 
 Full documentation available in the `docs/` directory:
@@ -56,7 +67,7 @@ make html
 # Open docs/_build/html/index.html
 ```
 
-Or read online: [Documentation](docs/)
+Or read online: [Documentation](https://acs-crawler.readthedocs.io/)
 
 ### Screenshots
 
@@ -80,7 +91,7 @@ This software is for **educational and research purposes only**.
 - ❌ Commercial Use (requires permission)
 - ⚠️ Respect ACS Terms of Service
 
-See [LICENSE](LICENSE) and [full documentation](docs/) for details.
+See [LICENSE](LICENSE) and [full documentation](https://acs-crawler.readthedocs.io/) for details.
 
 ---
 
@@ -117,6 +128,17 @@ http://localhost:8000
 - Chrome 浏览器
 - ChromeDriver（自动下载）
 
+### 已知限制
+
+- **性能**：基于 Selenium（比纯 HTTP 爬虫慢，每个任务启动约 3-5 秒）
+- **速率限制**：无自动限制 - 需手动间隔任务（最多 1-2 个并发）
+- **数据提取**：仅公开元数据（无付费内容，无作者单位）
+- **可扩展性**：顺序任务处理，SQLite 存储（不适用于生产环境）
+- **仅限 ACS**：专为 ACS 期刊设计，依赖当前页面结构
+- **法律**：用户需自行遵守 ACS 服务条款
+
+详见[完整文档](https://acs-crawler.readthedocs.io/)获取解决方法和最佳实践。
+
 ### 文档
 
 完整文档位于 `docs/` 目录：
@@ -127,7 +149,7 @@ make html
 # 打开 docs/_build/html/index.html
 ```
 
-或在线阅读：[文档](docs/)
+或在线阅读：[文档](https://acs-crawler.readthedocs.io/)
 
 ### 截图
 
@@ -151,7 +173,7 @@ make html
 - ❌ 商业用途（需要许可）
 - ⚠️ 遵守 ACS 服务条款
 
-详见[许可证](LICENSE)和[完整文档](docs/)。
+详见[许可证](LICENSE)和[完整文档](https://acs-crawler.readthedocs.io/)。
 
 ---
 
@@ -182,9 +204,9 @@ Contributions welcome! Please see [CONTRIBUTING.md](docs/CONTRIBUTING.md)
 
 ## Support / 支持
 
-- 📚 [Documentation](docs/)
-- 🐛 [Report Issues](https://github.com/your-repo/issues)
-- 💬 [Discussions](https://github.com/your-repo/discussions)
+- 📚 [Documentation](https://acs-crawler.readthedocs.io/)
+- 🐛 [Report Issues](https://github.com/gxf1212/ACS_crawler/issues)
+- 💬 [Discussions](https://github.com/gxf1212/ACS_crawler/discussions)
 
 ---
 
