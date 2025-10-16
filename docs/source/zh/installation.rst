@@ -3,6 +3,26 @@
 
 本指南提供了针对不同操作系统的详细安装说明。
 
+系统要求
+--------
+
+**通用要求：**
+
+* **内存**: 最少 4GB RAM（推荐 8GB）
+* **磁盘空间**: 应用程序和数据库至少需要 500MB
+* **网络**: 用于下载依赖项和爬取
+
+**Docker 安装：**
+
+* **Docker**: 20.10 或更高版本
+* **Docker Compose**: 2.0 或更高版本
+
+**本地安装：**
+
+* **Python**: 3.9 或更高版本
+* **Chrome 浏览器**: 最新稳定版本
+* **Conda/Mamba**: 推荐用于环境管理
+
 选择安装方式
 ------------
 
@@ -15,14 +35,6 @@ Docker 安装（推荐）
 -------------------
 
 Docker 提供了一个隔离的、可重现的环境，Chrome、ChromeDriver 和所有依赖项都已预安装。
-
-系统要求
-~~~~~~~~
-
-* **Docker**: 20.10 或更高版本
-* **Docker Compose**: 2.0 或更高版本（通常包含在 Docker Desktop 中）
-* **内存**: 最少 4GB RAM（推荐 8GB）
-* **磁盘空间**: 应用程序和数据库至少需要 500MB
 
 Docker Compose 快速开始
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -77,147 +89,51 @@ Docker Compose 快速开始
 
 适合希望完全控制环境的用户。
 
-系统要求
-~~~~~~~~
+步骤 1: 安装前置要求
+~~~~~~~~~~~~~~~~~~~~
 
-* **Python**: 3.9 或更高版本
-* **Chrome 浏览器**: 最新稳定版本
-* **内存**: 最少 4GB RAM（推荐 8GB）
-* **磁盘空间**: 应用程序和数据库至少需要 500MB
+**Python 3.9+**
 
-步骤 1: 安装 Python
--------------------
+* Ubuntu/Debian: ``sudo apt install python3.9 python3-pip``
+* macOS: ``brew install python@3.9``
+* Windows: 从 https://www.python.org/downloads/ 下载
 
-**Ubuntu/Debian**::
+**Chrome 浏览器**
 
-    sudo apt update
-    sudo apt install python3.9 python3-pip
+* Ubuntu/Debian: ``sudo apt install google-chrome-stable``
+* macOS: ``brew install --cask google-chrome``
+* Windows: 从 https://www.google.com/chrome/ 下载
 
-**macOS**::
+**Conda/Mamba**（推荐用于环境管理）
 
-    # 使用 Homebrew
-    brew install python@3.9
+* 下载 Miniconda: https://docs.conda.io/en/latest/miniconda.html
+* 或安装 Mamba（更快）: ``conda install mamba -n base -c conda-forge``
 
-**Windows**:
+步骤 2: 克隆并设置
+~~~~~~~~~~~~~~~~~~
 
-从 https://www.python.org/downloads/ 下载并运行安装程序。
-安装过程中请确保勾选"Add Python to PATH"。
-
-步骤 2: 安装 ACS Crawler
--------------------------
-
-克隆仓库
-~~~~~~~~
-
-::
+**克隆仓库**::
 
     git clone https://github.com/gxf1212/ACS_crawler.git
     cd ACS_crawler
 
-创建虚拟环境
-~~~~~~~~~~~~
+**创建 conda 环境**::
 
-**方式一: 使用 Conda（推荐）**::
-
-    # 创建环境
     conda create -n acs_crawler python=3.9
-
-    # 激活环境
     conda activate acs_crawler
 
-    # 安装依赖
-    pip install -r requirements.txt
-
-**方式二: 使用 Mamba（更快）**::
-
-    # 创建环境
-    mamba create -n acs_crawler python=3.9
-
-    # 激活环境
-    mamba activate acs_crawler
-
-    # 安装依赖
-    pip install -r requirements.txt
-
-安装依赖
-~~~~~~~~
-
-::
+**安装依赖**::
 
     pip install -r requirements.txt
 
-这将安装以下组件：
+这将安装 FastAPI、Selenium、BeautifulSoup4、SQLite 和 Uvicorn。
 
-* **FastAPI**: Web 框架
-* **Selenium**: 浏览器自动化
-* **BeautifulSoup4**: HTML 解析
-* **SQLite**: 数据库（Python 内置）
-* **Uvicorn**: ASGI 服务器
+**注意**: ChromeDriver 由 webdriver-manager 自动下载。无需手动设置！
 
-步骤 3: 安装 Chrome 浏览器
----------------------------
+步骤 3: 运行应用程序
+~~~~~~~~~~~~~~~~~~~~
 
-应用程序需要 Chrome 浏览器进行网页爬取。
-
-**Ubuntu/Debian**::
-
-    # 下载 Chrome
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-
-    # 安装 Chrome
-    sudo apt install ./google-chrome-stable_current_amd64.deb
-
-    # 验证安装
-    google-chrome --version
-
-**CentOS/RHEL/Fedora**::
-
-    # 添加 Google Chrome 仓库
-    sudo dnf install fedora-workstation-repositories
-    sudo dnf config-manager --set-enabled google-chrome
-
-    # 安装 Chrome
-    sudo dnf install google-chrome-stable
-
-**macOS**::
-
-    # 使用 Homebrew Cask
-    brew install --cask google-chrome
-
-**Windows**:
-
-从 https://www.google.com/chrome/ 下载并安装
-
-**无头 Linux 服务器**:
-
-对于没有显示器的服务器（如云虚拟机），需要安装 X11 库::
-
-    # Ubuntu/Debian
-    sudo apt install xvfb libxi6 libgconf-2-4
-
-步骤 4: ChromeDriver 设置
---------------------------
-
-ChromeDriver 由 ``webdriver-manager`` 自动下载。无需手动设置！
-
-**手动配置（可选）**:
-
-如果您希望手动管理 ChromeDriver：
-
-1. 从以下地址下载与您的 Chrome 版本匹配的 ChromeDriver：
-   https://chromedriver.chromium.org/downloads
-
-2. 解压并安装
-
-3. 编辑 ``src/acs_crawler/config.py`` 设置路径
-
-步骤 5: 验证安装
-----------------
-
-运行应用程序
-~~~~~~~~~~~~
-
-::
+启动服务器::
 
     python run.py
 
@@ -228,37 +144,70 @@ ChromeDriver 由 ``webdriver-manager`` 自动下载。无需手动设置！
     INFO:     Application startup complete.
     INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 
-访问仪表板
-~~~~~~~~~~
+在浏览器中访问 http://localhost:8000
 
-在浏览器中访问：http://localhost:8000
+您应该看到统计仪表板、交互式图表和期刊选择。
 
-您应该看到统计仪表板、交互式图表、期刊选择下拉菜单等。
+平台特定说明
+~~~~~~~~~~~~
 
-Docker 安装（替代方案）
-------------------------
+Ubuntu/Debian
+^^^^^^^^^^^^^
 
-Docker 提供了一个隔离的、可重现的环境，所有依赖项都已预安装。
+**安装所有前置要求**::
 
-使用 Docker Compose（推荐）
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # 系统包
+    sudo apt update
+    sudo apt install python3.9 python3-pip google-chrome-stable
 
-::
+    # 无头服务器
+    sudo apt install xvfb
+
+**安装 Conda/Mamba**::
+
+    # Miniconda
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    bash Miniconda3-latest-Linux-x86_64.sh
+
+    # Mamba（通过 conda-forge）
+    conda install mamba -n base -c conda-forge
+
+macOS
+^^^^^
+
+**使用 Homebrew**::
+
+    # 安装 Homebrew（如果未安装）
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # 安装前置要求
+    brew install python@3.9 google-chrome
+
+    # 安装 Conda
+    brew install --cask miniconda
+
+Windows
+^^^^^^^
+
+1. **安装 Python**: 从 https://www.python.org/ 下载
+2. **安装 Chrome**: 从 https://www.google.com/chrome/ 下载
+3. **安装 Conda**: 从 https://docs.conda.io/en/latest/miniconda.html 下载 Miniconda
+
+**PowerShell 命令**::
 
     # 克隆仓库
     git clone https://github.com/gxf1212/ACS_crawler.git
     cd ACS_crawler
 
-    # 启动应用程序
-    docker-compose up -d
+    # 创建 conda 环境
+    conda create -n acs_crawler python=3.9
+    conda activate acs_crawler
 
-    # 查看日志
-    docker-compose logs -f
+    # 安装依赖
+    pip install -r requirements.txt
 
-    # 停止应用程序
-    docker-compose down
-
-**访问应用程序**：在浏览器中打开 http://localhost:8000
+    # 运行应用程序
+    python run.py
 
 已知限制
 --------

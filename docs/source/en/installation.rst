@@ -3,6 +3,26 @@ Installation
 
 This guide provides detailed installation instructions for different operating systems.
 
+System Requirements
+-------------------
+
+**Common Requirements:**
+
+* **Memory**: 4GB RAM minimum (8GB recommended)
+* **Disk Space**: 500MB for application + database
+* **Internet**: For downloading dependencies and crawling
+
+**Docker Installation:**
+
+* **Docker**: 20.10 or higher
+* **Docker Compose**: 2.0 or higher
+
+**Local Installation:**
+
+* **Python**: 3.9 or higher
+* **Chrome Browser**: Latest stable version
+* **Conda/Mamba**: Recommended for environment management
+
 Choose Your Installation Method
 --------------------------------
 
@@ -15,14 +35,6 @@ Docker Installation (Recommended)
 ----------------------------------
 
 Docker provides an isolated, reproducible environment with Chrome, ChromeDriver, and all dependencies pre-installed.
-
-System Requirements
-~~~~~~~~~~~~~~~~~~~
-
-* **Docker**: 20.10 or higher
-* **Docker Compose**: 2.0 or higher (usually included with Docker Desktop)
-* **Memory**: 4GB RAM minimum (8GB recommended)
-* **Disk Space**: 500MB for application + database
 
 Quick Start with Docker Compose
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -77,175 +89,51 @@ Local Installation via Conda
 
 For users who prefer full control over the environment.
 
-System Requirements
-~~~~~~~~~~~~~~~~~~~
+Step 1: Install Prerequisites
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* **Python**: 3.9 or higher
-* **Chrome Browser**: Latest stable version
-* **Memory**: 4GB RAM minimum (8GB recommended)
-* **Disk Space**: 500MB for application + database
+**Python 3.9+**
 
-Step 1: Install Python
-~~~~~~~~~~~~~~~~~~~~~~~
+* Ubuntu/Debian: ``sudo apt install python3.9 python3-pip``
+* macOS: ``brew install python@3.9``
+* Windows: Download from https://www.python.org/downloads/
 
-**Ubuntu/Debian**::
+**Chrome Browser**
 
-    sudo apt update
-    sudo apt install python3.9 python3-pip
+* Ubuntu/Debian: ``sudo apt install google-chrome-stable``
+* macOS: ``brew install --cask google-chrome``
+* Windows: Download from https://www.google.com/chrome/
 
-**macOS**::
+**Conda/Mamba** (Recommended for environment management)
 
-    # Using Homebrew
-    brew install python@3.9
+* Download Miniconda: https://docs.conda.io/en/latest/miniconda.html
+* Or install Mamba (faster): ``conda install mamba -n base -c conda-forge``
 
-**Windows**:
+Step 2: Clone and Setup
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Download from https://www.python.org/downloads/ and run the installer.
-Make sure to check "Add Python to PATH" during installation.
-
-Step 2: Install ACS Crawler
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Clone the Repository
-~~~~~~~~~~~~~~~~~~~~
-
-::
+**Clone the repository**::
 
     git clone https://github.com/gxf1212/ACS_crawler.git
     cd ACS_crawler
 
-Create Virtual Environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Create conda environment**::
 
-**Option 1: Using Conda (Recommended)**::
-
-    # Create environment
     conda create -n acs_crawler python=3.9
-
-    # Activate environment
     conda activate acs_crawler
 
-    # Install dependencies
-    pip install -r requirements.txt
-
-**Option 2: Using Mamba (Faster)**::
-
-    # Create environment
-    mamba create -n acs_crawler python=3.9
-
-    # Activate environment
-    mamba activate acs_crawler
-
-    # Install dependencies
-    pip install -r requirements.txt
-
-Install Dependencies
-~~~~~~~~~~~~~~~~~~~~
-
-::
+**Install dependencies**::
 
     pip install -r requirements.txt
 
-This will install:
+This installs FastAPI, Selenium, BeautifulSoup4, SQLite, and Uvicorn.
 
-* **FastAPI**: Web framework
-* **Selenium**: Browser automation
-* **BeautifulSoup4**: HTML parsing
-* **SQLite**: Database (built-in with Python)
-* **Uvicorn**: ASGI server
+**Note**: ChromeDriver is automatically downloaded by webdriver-manager. No manual setup needed!
 
-Step 3: Install Chrome Browser
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The application requires Chrome browser for web scraping.
-
-**Ubuntu/Debian**::
-
-    # Download Chrome
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-
-    # Install Chrome
-    sudo apt install ./google-chrome-stable_current_amd64.deb
-
-    # Verify installation
-    google-chrome --version
-
-**CentOS/RHEL/Fedora**::
-
-    # Add Google Chrome repository
-    sudo dnf install fedora-workstation-repositories
-    sudo dnf config-manager --set-enabled google-chrome
-
-    # Install Chrome
-    sudo dnf install google-chrome-stable
-
-    # Or download directly
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-    sudo dnf install google-chrome-stable_current_x86_64.rpm
-
-**macOS**::
-
-    # Using Homebrew Cask
-    brew install --cask google-chrome
-
-    # Or download from https://www.google.com/chrome/
-
-**Windows**:
-
-Download and install from https://www.google.com/chrome/
-
-**Headless Linux Servers**:
-
-For servers without a display (e.g., cloud VMs), you need X11 libraries::
-
-    # Ubuntu/Debian
-    sudo apt install xvfb libxi6 libgconf-2-4
-
-    # CentOS/RHEL
-    sudo yum install xorg-x11-server-Xvfb libXi libXinerama
-
-Step 4: ChromeDriver Setup
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-ChromeDriver is automatically downloaded by ``webdriver-manager``. No manual setup needed!
-
-**Manual Configuration (Optional)**:
-
-If you prefer to manage ChromeDriver manually:
-
-1. Download ChromeDriver matching your Chrome version from:
-   https://chromedriver.chromium.org/downloads
-
-2. Extract the binary:
-
-   **Linux/macOS**::
-
-       # Extract
-       unzip chromedriver_linux64.zip
-
-       # Move to system path
-       sudo mv chromedriver /usr/local/bin/
-
-       # Make executable
-       sudo chmod +x /usr/local/bin/chromedriver
-
-   **Windows**:
-
-   Extract ``chromedriver.exe`` to a folder (e.g., ``C:\chromedriver\``)
-
-3. Edit ``src/acs_crawler/config.py``::
-
-       CHROMEDRIVER_PATH: Optional[str] = "/usr/local/bin/chromedriver"  # Linux/macOS
-       # or
-       CHROMEDRIVER_PATH: Optional[str] = r"C:\chromedriver\chromedriver.exe"  # Windows
-
-Step 5: Verify Installation
+Step 3: Run the Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Run the Application
-~~~~~~~~~~~~~~~~~~~
-
-::
+Start the server::
 
     python run.py
 
@@ -256,19 +144,9 @@ Expected output::
     INFO:     Application startup complete.
     INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 
-Access the Dashboard
-~~~~~~~~~~~~~~~~~~~~
+Open your browser and visit http://localhost:8000
 
-Open your browser and visit:
-
-http://localhost:8000
-
-You should see:
-
-* Statistics dashboard
-* Interactive charts
-* Journal selection dropdown
-* Recent jobs and papers
+You should see the dashboard with statistics, charts, and journal selection.
 
 Platform-Specific Notes
 ~~~~~~~~~~~~~~~~~~~~~~~
