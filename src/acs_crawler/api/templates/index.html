@@ -58,17 +58,18 @@
                 <h5 class="card-title"><i class="bi bi-plus-circle"></i> Create New Crawl Job</h5>
 
                 <!-- Job Type Tabs -->
-                <ul class="nav nav-tabs mb-3" id="jobTypeTabs" role="tablist">
+                <!-- Search tab hidden: Cloudflare blocks automated search queries -->
+                <ul class="nav nav-tabs mb-3" id="jobTypeTabs" role="tablist" style="display: none;">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="journal-tab" data-bs-toggle="tab" data-bs-target="#journal-tab-pane" type="button">
                             <i class="bi bi-journal"></i> Journal Issue
                         </button>
                     </li>
-                    <li class="nav-item" role="presentation">
+                    <!-- <li class="nav-item" role="presentation">
                         <button class="nav-link" id="search-tab" data-bs-toggle="tab" data-bs-target="#search-tab-pane" type="button">
                             <i class="bi bi-search"></i> Search Query
                         </button>
-                    </li>
+                    </li> -->
                 </ul>
 
                 <div class="tab-content" id="jobTypeTabContent">
@@ -117,8 +118,8 @@
                         <div id="jobAlert" class="mt-3" style="display: none;"></div>
                     </div>
 
-                    <!-- Search Tab -->
-                    <div class="tab-pane fade" id="search-tab-pane">
+                    <!-- Search Tab (Hidden due to Cloudflare protection) -->
+                    <div class="tab-pane fade" id="search-tab-pane" style="display: none;">
                         <form id="createSearchJobForm">
                             <div class="row mb-3">
                                 <div class="col-md-12">

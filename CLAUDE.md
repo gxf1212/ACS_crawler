@@ -33,10 +33,16 @@ src/acs_crawler/
 - ✅ Background job processing
 - ✅ Real-time progress tracking
 - ✅ SQLite with relationships (papers, authors, keywords, jobs)
-- ❌ Search crawling (Cloudflare protected)
+- ✅ Local filtering/search in Papers UI (client-side)
+- ❌ Automated search crawling (Cloudflare Turnstile protected)
 
 ### Known Issues
-1. **Search results**: Blocked by Cloudflare Turnstile challenge (use journal URLs instead)
+1. **Search URL crawling**: ACS search pages (`/action/doSearch`) are protected by Cloudflare Turnstile CAPTCHA
+   - Blocks ALL automated tools (Selenium, undetected-chromedriver, curl, etc.)
+   - Cannot be bypassed with current stealth techniques
+   - **Workaround**: Use journal issue URLs (`/toc/` pages) which work perfectly
+   - Users can filter papers locally in the Papers UI after crawling journals
+   - Search tab hidden in UI (code remains for future API access)
 2. **Wait times**: Page loading can take 10-15 seconds per paper
 
 ### Recent Fixes

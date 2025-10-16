@@ -48,6 +48,10 @@ http://localhost:8000
 
 ### Known Limitations
 
+- **No Search URL Crawling**: ACS search pages are protected by Cloudflare Turnstile CAPTCHA
+  - Automated tools (Selenium, curl, etc.) are blocked
+  - **Workaround**: Use journal issue URLs which work perfectly
+  - Local filtering available in Papers UI after crawling
 - **Performance**: Selenium-based (slower than HTTP-only crawlers, ~3-5s startup per job)
 - **Rate Limiting**: No automatic limits - space out jobs manually (1-2 concurrent max)
 - **Data Extraction**: Only public metadata (no paywalled content, no author affiliations)
@@ -137,6 +141,10 @@ http://localhost:8000
 
 ### 已知限制
 
+- **无法爬取搜索 URL**：ACS 搜索页面受 Cloudflare Turnstile 验证码保护
+  - 自动化工具（Selenium、curl 等）被阻止
+  - **解决方法**：使用期刊页面 URL，完美工作
+  - 爬取后可在论文界面进行本地过滤
 - **性能**：基于 Selenium（比纯 HTTP 爬虫慢，每个任务启动约 3-5 秒）
 - **速率限制**：无自动限制 - 需手动间隔任务（最多 1-2 个并发）
 - **数据提取**：仅公开元数据（无付费内容，无作者单位）

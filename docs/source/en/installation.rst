@@ -416,6 +416,40 @@ Docker Troubleshooting
     # With Docker CLI
     docker build -t acs-crawler:latest . --no-cache
 
+Known Limitations
+------------------
+
+**Search URL Crawling Not Supported**
+
+ACS search pages (``/action/doSearch``) are protected by Cloudflare Turnstile CAPTCHA that blocks all automated access:
+
+* **Blocked**: Selenium, undetected-chromedriver, curl, and other automated tools
+* **Why**: JavaScript-based challenge requires human interaction
+* **Workaround**: Use journal issue URLs (``/toc/`` pages) which work perfectly
+
+**Alternative Approach**:
+
+Instead of crawling search results, you can:
+
+1. Browse specific journals relevant to your research
+2. Crawl journal issues that match your timeframe
+3. Use the Papers UI to filter locally by keywords after crawling
+
+Example::
+
+    # Instead of searching for "SARS-CoV-2"
+    # Crawl relevant journals like:
+    - Journal of Medicinal Chemistry
+    - ACS Infectious Diseases
+    - Then filter in Papers UI
+
+The local filtering in the Papers page supports searching across:
+
+* Paper titles
+* Author names
+* Abstracts
+* Keywords
+
 Troubleshooting
 ---------------
 
