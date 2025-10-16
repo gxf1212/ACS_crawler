@@ -157,14 +157,23 @@ Table of Contents
 
 .. toctree::
    :maxdepth: 2
-   :caption: 中文文档
-   :hidden:
+   :caption: 快速开始
 
    zh/installation
    zh/quickstart
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 使用指南
+
    zh/web_usage
    zh/api_usage
    zh/troubleshooting
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 开发
+
    zh/api
    zh/architecture
    zh/contributing
