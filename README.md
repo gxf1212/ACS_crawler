@@ -29,6 +29,20 @@ A professional web-based crawler for American Chemical Society (ACS) papers with
 
 ### Quick Start
 
+**Option 1: Docker (Recommended)**
+
+```bash
+# Start with Docker Compose
+docker compose up -d
+
+# Access at http://localhost:8000
+
+# Stop
+docker compose down
+```
+
+**Option 2: Local Installation**
+
 ```bash
 # Install dependencies
 pip install -r requirements.txt
@@ -42,9 +56,10 @@ http://localhost:8000
 
 ### Requirements
 
-- Python 3.9+
-- Chrome browser
-- ChromeDriver (auto-downloaded)
+- **Docker**: 20.10+ (for Docker installation), OR
+- **Python**: 3.9+ (for local installation)
+- **Chrome browser**: Latest stable version
+- **ChromeDriver**: Auto-downloaded by webdriver-manager
 
 ### Known Limitations
 
@@ -122,6 +137,20 @@ See [LICENSE](LICENSE) and [full documentation](https://acs-crawler.readthedocs.
 
 ### 快速开始
 
+**方式一：Docker（推荐）**
+
+```bash
+# 使用 Docker Compose 启动
+docker compose up -d
+
+# 访问 http://localhost:8000
+
+# 停止
+docker compose down
+```
+
+**方式二：本地安装**
+
 ```bash
 # 安装依赖
 pip install -r requirements.txt
@@ -135,9 +164,10 @@ http://localhost:8000
 
 ### 环境要求
 
-- Python 3.9+
-- Chrome 浏览器
-- ChromeDriver（自动下载）
+- **Docker**: 20.10+（Docker 安装方式），或
+- **Python**: 3.9+（本地安装方式）
+- **Chrome 浏览器**: 最新稳定版
+- **ChromeDriver**: 由 webdriver-manager 自动下载
 
 ### 已知限制
 

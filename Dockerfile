@@ -1,7 +1,7 @@
 # ACS Paper Crawler - Docker Image
 # Multi-stage build for smaller final image
 
-FROM python:3.9-slim as base
+FROM python:3.9-slim AS base
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \

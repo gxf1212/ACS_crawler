@@ -6,12 +6,40 @@ This guide will get you up and running with ACS Paper Crawler in minutes.
 Prerequisites
 -------------
 
+**Option 1: Docker (Recommended)**
+
+* Docker 20.10 or higher
+* Docker Compose 2.0 or higher
+
+**Option 2: Local Installation**
+
 * Python 3.9 or higher
 * Chrome browser
 * pip package manager
 
 Installation
 ------------
+
+Option 1: Docker (Recommended)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Clone the repository::
+
+    git clone https://github.com/gxf1212/ACS_crawler.git
+    cd ACS_crawler
+
+2. Start with Docker Compose::
+
+    docker compose up -d
+
+3. Open your browser::
+
+    http://localhost:8000
+
+That's it! Docker will automatically install Chrome, ChromeDriver, and all dependencies.
+
+Option 2: Local Installation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Clone the repository::
 
@@ -30,7 +58,7 @@ Installation
 
     http://localhost:8000
 
-That's it! You should see the dashboard with statistics and charts.
+You should see the dashboard with statistics and charts.
 
 First Crawl
 -----------

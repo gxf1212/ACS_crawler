@@ -6,12 +6,40 @@
 前提条件
 --------
 
+**方式一：Docker（推荐）**
+
+* Docker 20.10 或更高版本
+* Docker Compose 2.0 或更高版本
+
+**方式二：本地安装**
+
 * Python 3.9 或更高版本
 * Chrome 浏览器
 * pip 包管理器
 
 安装
 ----
+
+方式一：Docker（推荐）
+~~~~~~~~~~~~~~~~~~~~~~
+
+1. 克隆仓库::
+
+    git clone https://github.com/gxf1212/ACS_crawler.git
+    cd ACS_crawler
+
+2. 使用 Docker Compose 启动::
+
+    docker compose up -d
+
+3. 打开浏览器::
+
+    http://localhost:8000
+
+就是这样！Docker 会自动安装 Chrome、ChromeDriver 和所有依赖项。
+
+方式二：本地安装
+~~~~~~~~~~~~~~~~
 
 1. 克隆仓库::
 
@@ -30,7 +58,7 @@
 
     http://localhost:8000
 
-就是这样！您应该看到带有统计和图表的仪表板。
+您应该看到带有统计和图表的仪表板。
 
 第一次爬取
 ----------
