@@ -3,6 +3,80 @@
 
 本指南提供了针对不同操作系统的详细安装说明。
 
+选择安装方式
+------------
+
+本指南涵盖两种安装方法：
+
+* **Docker 安装（推荐）**：最简单的设置，所有依赖项预配置
+* **通过 Conda 本地安装**：完全控制环境
+
+Docker 安装（推荐）
+===================
+
+Docker 提供了一个隔离的、可重现的环境，所有依赖项都已预安装。
+
+系统要求
+--------
+
+* **Docker**: 20.10 或更高版本
+* **Docker Compose**: 2.0 或更高版本（通常包含在 Docker Desktop 中）
+* **内存**: 最少 4GB RAM（推荐 8GB）
+* **磁盘空间**: 应用程序和数据库至少需要 500MB
+
+Docker Compose 快速开始
+-----------------------
+
+**步骤 1：安装 Docker**
+
+按照官方 Docker 安装指南安装：
+
+* Linux: https://docs.docker.com/engine/install/
+* macOS: https://docs.docker.com/desktop/install/mac-install/
+* Windows: https://docs.docker.com/desktop/install/windows-install/
+
+**步骤 2：克隆并启动**::
+
+    # 克隆仓库
+    git clone https://github.com/gxf1212/ACS_crawler.git
+    cd ACS_crawler
+
+    # 启动应用程序
+    docker compose up -d
+
+    # 查看日志
+    docker compose logs -f
+
+**步骤 3：访问应用程序**
+
+在浏览器中打开 http://localhost:8000
+
+**Docker 的作用：**
+
+* 自动安装 Chrome 和 ChromeDriver
+* 为数据和日志创建持久卷
+* 在端口 8000 上启动容器
+* 失败时自动重启
+* 资源限制（2GB RAM，2 个 CPU）
+
+**管理 Docker 容器**::
+
+    # 停止应用程序
+    docker compose down
+
+    # 重启
+    docker compose restart
+
+    # 查看日志
+    docker compose logs -f
+
+----
+
+通过 Conda 本地安装
+===================
+
+适合希望完全控制环境的用户。
+
 系统要求
 --------
 

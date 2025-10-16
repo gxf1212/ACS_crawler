@@ -3,6 +3,80 @@ Installation
 
 This guide provides detailed installation instructions for different operating systems.
 
+Choose Your Installation Method
+--------------------------------
+
+This guide covers two installation methods:
+
+* **Docker Installation (Recommended)**: Easiest setup with all dependencies pre-configured
+* **Local Installation via Conda**: Full control over the environment
+
+Docker Installation (Recommended)
+==================================
+
+Docker provides an isolated, reproducible environment with all dependencies pre-installed.
+
+System Requirements
+-------------------
+
+* **Docker**: 20.10 or higher
+* **Docker Compose**: 2.0 or higher (usually included with Docker Desktop)
+* **Memory**: 4GB RAM minimum (8GB recommended)
+* **Disk Space**: 500MB for application + database
+
+Quick Start with Docker Compose
+--------------------------------
+
+**Step 1: Install Docker**
+
+Follow the official Docker installation guide for your platform:
+
+* Linux: https://docs.docker.com/engine/install/
+* macOS: https://docs.docker.com/desktop/install/mac-install/
+* Windows: https://docs.docker.com/desktop/install/windows-install/
+
+**Step 2: Clone and Start**::
+
+    # Clone repository
+    git clone https://github.com/gxf1212/ACS_crawler.git
+    cd ACS_crawler
+
+    # Start the application
+    docker compose up -d
+
+    # View logs
+    docker compose logs -f
+
+**Step 3: Access the Application**
+
+Open http://localhost:8000 in your browser.
+
+**What Docker Does:**
+
+* Automatically installs Chrome and ChromeDriver
+* Creates persistent volumes for data and logs
+* Starts container on port 8000
+* Automatic restart on failure
+* Resource limits (2GB RAM, 2 CPUs)
+
+**Manage Docker Container**::
+
+    # Stop the application
+    docker compose down
+
+    # Restart
+    docker compose restart
+
+    # View logs
+    docker compose logs -f
+
+----
+
+Local Installation via Conda
+=============================
+
+For users who prefer full control over the environment.
+
 System Requirements
 -------------------
 
@@ -256,165 +330,6 @@ Windows
 
     # Run application
     python run.py
-
-Docker Installation (Alternative)
-----------------------------------
-
-Docker provides an isolated, reproducible environment with all dependencies pre-installed.
-
-Prerequisites
-~~~~~~~~~~~~~
-
-* **Docker**: 20.10 or higher (`Install Docker <https://docs.docker.com/get-docker/>`_)
-* **Docker Compose**: 2.0 or higher (usually included with Docker Desktop)
-
-Option 1: Using Docker Compose (Recommended)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**Quick Start**::
-
-    # Clone repository
-    git clone https://github.com/gxf1212/ACS_crawler.git
-    cd ACS_crawler
-
-    # Start the application
-    docker-compose up -d
-
-    # View logs
-    docker-compose logs -f
-
-    # Stop the application
-    docker-compose down
-
-**What it does:**
-
-* Builds Docker image with Chrome and all dependencies
-* Creates persistent volumes for data and logs
-* Starts container on port 8000
-* Automatic restart on failure
-* Resource limits (2GB RAM, 2 CPUs)
-
-**Access the application:**
-
-Open http://localhost:8000 in your browser
-
-Option 2: Using Docker CLI
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**Build the image**::
-
-    docker build -t acs-crawler:latest .
-
-**Run the container**::
-
-    # Create data directory (first time only)
-    mkdir -p data logs
-
-    # Run container
-    docker run -d \
-      --name acs-crawler \
-      -p 8000:8000 \
-      -v $(pwd)/data:/app/data \
-      -v $(pwd)/logs:/app/logs \
-      --restart unless-stopped \
-      acs-crawler:latest
-
-**Manage container**::
-
-    # View logs
-    docker logs -f acs-crawler
-
-    # Stop container
-    docker stop acs-crawler
-
-    # Start container
-    docker start acs-crawler
-
-    # Remove container
-    docker rm -f acs-crawler
-
-Option 3: Pull from GitHub Container Registry
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**Pull pre-built image** (when available)::
-
-    # Pull latest image
-    docker pull ghcr.io/gxf1212/acs_crawler:latest
-
-    # Run container
-    docker run -d \
-      --name acs-crawler \
-      -p 8000:8000 \
-      -v $(pwd)/data:/app/data \
-      -v $(pwd)/logs:/app/logs \
-      ghcr.io/gxf1212/acs_crawler:latest
-
-**Note**: GHCR images are published automatically via GitHub Actions on each release.
-
-Docker Configuration
-~~~~~~~~~~~~~~~~~~~~
-
-**Environment Variables**:
-
-You can customize the container behavior with environment variables::
-
-    docker run -d \
-      -e PYTHONUNBUFFERED=1 \
-      -e CHROME_BIN=/usr/bin/google-chrome \
-      -p 8000:8000 \
-      acs-crawler:latest
-
-**Port Mapping**:
-
-Change the host port if 8000 is in use::
-
-    docker run -d -p 8080:8000 acs-crawler:latest
-
-**Volume Mounts**:
-
-* ``./data:/app/data`` - Persist database
-* ``./logs:/app/logs`` - Persist log files
-
-**Resource Limits** (in docker-compose.yml):
-
-.. code-block:: yaml
-
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 2G
-
-Docker Troubleshooting
-~~~~~~~~~~~~~~~~~~~~~~
-
-**Container exits immediately**::
-
-    # Check logs
-    docker logs acs-crawler
-
-**Port already in use**::
-
-    # Change port mapping
-    docker run -p 8080:8000 ...
-
-**Permission denied on data directory**::
-
-    # Fix permissions
-    sudo chown -R 1000:1000 data logs
-
-**Chrome not working in Docker**::
-
-    # Ensure you're using the provided Dockerfile
-    # It includes all necessary Chrome dependencies
-
-**Rebuild image after code changes**::
-
-    # With docker-compose
-    docker-compose up -d --build
-
-    # With Docker CLI
-    docker build -t acs-crawler:latest . --no-cache
 
 Known Limitations
 ------------------
