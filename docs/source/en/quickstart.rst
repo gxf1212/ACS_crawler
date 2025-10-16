@@ -38,23 +38,28 @@ Option 1: Docker (Recommended)
 
 That's it! Docker will automatically install Chrome, ChromeDriver, and all dependencies.
 
-Option 2: Local Installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Option 2: Local Installation via Conda
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Clone the repository::
 
     git clone https://github.com/gxf1212/ACS_crawler.git
     cd ACS_crawler
 
-2. Install dependencies::
+2. Create conda environment::
+
+    conda create -n acs_crawler python=3.9
+    conda activate acs_crawler
+
+3. Install dependencies::
 
     pip install -r requirements.txt
 
-3. Run the application::
+4. Run the application::
 
     python run.py
 
-4. Open your browser::
+5. Open your browser::
 
     http://localhost:8000
 

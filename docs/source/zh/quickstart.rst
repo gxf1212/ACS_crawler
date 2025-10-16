@@ -38,23 +38,28 @@
 
 就是这样！Docker 会自动安装 Chrome、ChromeDriver 和所有依赖项。
 
-方式二：本地安装
-~~~~~~~~~~~~~~~~
+方式二：通过 Conda 本地安装
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. 克隆仓库::
 
     git clone https://github.com/gxf1212/ACS_crawler.git
     cd ACS_crawler
 
-2. 安装依赖::
+2. 创建 conda 环境::
+
+    conda create -n acs_crawler python=3.9
+    conda activate acs_crawler
+
+3. 安装依赖::
 
     pip install -r requirements.txt
 
-3. 运行应用::
+4. 运行应用::
 
     python run.py
 
-4. 打开浏览器::
+5. 打开浏览器::
 
     http://localhost:8000
 
