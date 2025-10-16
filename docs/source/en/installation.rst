@@ -12,12 +12,12 @@ This guide covers two installation methods:
 * **Local Installation via Conda**: Full control over the environment
 
 Docker Installation (Recommended)
-==================================
+----------------------------------
 
-Docker provides an isolated, reproducible environment with all dependencies pre-installed.
+Docker provides an isolated, reproducible environment with Chrome, ChromeDriver, and all dependencies pre-installed.
 
 System Requirements
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 * **Docker**: 20.10 or higher
 * **Docker Compose**: 2.0 or higher (usually included with Docker Desktop)
@@ -25,7 +25,7 @@ System Requirements
 * **Disk Space**: 500MB for application + database
 
 Quick Start with Docker Compose
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Step 1: Install Docker**
 
@@ -73,12 +73,12 @@ Open http://localhost:8000 in your browser.
 ----
 
 Local Installation via Conda
-=============================
+-----------------------------
 
 For users who prefer full control over the environment.
 
 System Requirements
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 * **Python**: 3.9 or higher
 * **Chrome Browser**: Latest stable version
@@ -86,7 +86,7 @@ System Requirements
 * **Disk Space**: 500MB for application + database
 
 Step 1: Install Python
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 **Ubuntu/Debian**::
 
@@ -104,7 +104,7 @@ Download from https://www.python.org/downloads/ and run the installer.
 Make sure to check "Add Python to PATH" during installation.
 
 Step 2: Install ACS Crawler
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Clone the Repository
 ~~~~~~~~~~~~~~~~~~~~
@@ -155,7 +155,7 @@ This will install:
 * **Uvicorn**: ASGI server
 
 Step 3: Install Chrome Browser
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The application requires Chrome browser for web scraping.
 
@@ -205,7 +205,7 @@ For servers without a display (e.g., cloud VMs), you need X11 libraries::
     sudo yum install xorg-x11-server-Xvfb libXi libXinerama
 
 Step 4: ChromeDriver Setup
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ChromeDriver is automatically downloaded by ``webdriver-manager``. No manual setup needed!
 
@@ -240,7 +240,7 @@ If you prefer to manage ChromeDriver manually:
        CHROMEDRIVER_PATH: Optional[str] = r"C:\chromedriver\chromedriver.exe"  # Windows
 
 Step 5: Verify Installation
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Run the Application
 ~~~~~~~~~~~~~~~~~~~
@@ -271,7 +271,7 @@ You should see:
 * Recent jobs and papers
 
 Platform-Specific Notes
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Ubuntu/Debian
 ~~~~~~~~~~~~~
