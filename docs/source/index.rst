@@ -129,25 +129,25 @@ Quick Links / 快速链接
 
    本软件仅用于**教育和研究目的**。用户需自行遵守 ACS 服务条款。
 
-Table of Contents
-=================
-
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+   :hidden:
    :caption: Getting Started
 
    en/installation
    en/quickstart
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+   :hidden:
    :caption: Usage
 
    en/web_usage
    en/api_usage
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+   :hidden:
    :caption: Development
 
    en/api
@@ -156,14 +156,16 @@ Table of Contents
    en/license
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+   :hidden:
    :caption: 快速开始
 
    zh/installation
    zh/quickstart
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+   :hidden:
    :caption: 使用指南
 
    zh/web_usage
@@ -171,16 +173,11 @@ Table of Contents
    zh/troubleshooting
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+   :hidden:
    :caption: 开发
 
    zh/api
    zh/architecture
    zh/contributing
    zh/license
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
