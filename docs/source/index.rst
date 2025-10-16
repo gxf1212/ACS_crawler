@@ -127,7 +127,7 @@ Quick Links / 快速链接
 
    This software is for **educational and research purposes only**. Users are responsible for complying with ACS Terms of Service.
 
-   本软件仅用于**教育和研究目的**。用户需自行遵守 ACS 服务条款。
+   本软件仅用于 **教育和研究目的** 。用户需自行遵守 ACS 服务条款。
 
 .. toctree::
    :maxdepth: 1
