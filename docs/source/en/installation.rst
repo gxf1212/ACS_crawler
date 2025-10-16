@@ -23,21 +23,10 @@ System Requirements
 * **Chrome Browser**: Latest stable version
 * **Conda/Mamba**: Recommended for environment management
 
-Choose Your Installation Method
---------------------------------
-
-This guide covers two installation methods:
-
-* **Docker Installation (Recommended)**: Easiest setup with all dependencies pre-configured
-* **Local Installation via Conda**: Full control over the environment
-
 Docker Installation (Recommended)
-----------------------------------
+-----------------------------------
 
 Docker provides an isolated, reproducible environment with Chrome, ChromeDriver, and all dependencies pre-installed.
-
-Quick Start with Docker Compose
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Step 1: Install Docker**
 
@@ -81,8 +70,6 @@ Open http://localhost:8000 in your browser.
 
     # View logs
     docker compose logs -f
-
-----
 
 Local Installation via Conda
 -----------------------------
@@ -152,7 +139,7 @@ Platform-Specific Notes
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Ubuntu/Debian
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 **Install all prerequisites**::
 
@@ -173,7 +160,7 @@ Ubuntu/Debian
     conda install mamba -n base -c conda-forge
 
 macOS
-~~~~~
+^^^^^
 
 **Using Homebrew**::
 
@@ -187,7 +174,7 @@ macOS
     brew install --cask miniconda
 
 Windows
-~~~~~~~
+^^^^^^^
 
 1. **Install Python**: Download from https://www.python.org/
 2. **Install Chrome**: Download from https://www.google.com/chrome/
