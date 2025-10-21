@@ -1,9 +1,20 @@
 """Configuration module for ACS Crawler."""
 
 import logging
+import os
 import sys
 from pathlib import Path
 from typing import Final, Optional
+
+try:
+    from dotenv import load_dotenv
+    # Load .env file from project root if it exists
+    env_path = Path(__file__).parent.parent.parent / ".env"
+    if env_path.exists():
+        load_dotenv(env_path)
+except ImportError:
+    # python-dotenv not installed, skip .env loading
+    pass
 
 # Project paths
 PROJECT_ROOT: Final[Path] = Path(__file__).parent.parent.parent
@@ -26,8 +37,12 @@ RETRY_DELAY: Final[float] = 1.0
 DB_FILE: Final[Path] = DATA_DIR / "acs_papers.json"
 
 # Selenium/ChromeDriver settings
-# Set to None to auto-download, or provide path to your chromedriver executable
-CHROMEDRIVER_PATH: Optional[str] = None  # e.g., "/usr/local/bin/chromedriver" or "/tmp/chromedriver-linux64/chromedriver"
+# Priority: Environment variable > .env file > None (auto-download)
+# Set CHROMEDRIVER_PATH environment variable or add it to .env file
+# Examples:
+#   Linux/Mac: /usr/local/bin/chromedriver
+#   Windows: C:\Program Files\Google\Chrome\Application\chromedriver-win64\chromedriver.exe
+CHROMEDRIVER_PATH: Optional[str] = os.getenv("CHROMEDRIVER_PATH")
 
 
 def setup_logging(level: int = logging.INFO) -> None:

@@ -1,11 +1,27 @@
 [project]
 name = "acs-crawler"
-version = "0.1.0"
-description = "A professional crawler for American Chemical Society papers"
+version = "0.1.1"
+description = "A professional crawler for American Chemical Society papers with modern web dashboard"
 readme = "README.md"
 requires-python = ">=3.9"
+license = {text = "MIT"}
 authors = [
-    {name = "ACS Crawler Team"}
+    {name = "Xufan Gao", email = "gxf1212@zju.edu.cn"}
+]
+keywords = ["acs", "crawler", "web-scraping", "research", "chemistry", "papers", "scientific-research"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: OS Independent",
+    "Framework :: FastAPI",
 ]
 
 dependencies = [
@@ -18,7 +34,18 @@ dependencies = [
     "pydantic>=2.6.0",
     "python-multipart>=0.0.9",
     "httpx>=0.26.0",
+    "selenium>=4.15.0",
+    "webdriver-manager>=4.0.1",
+    "openpyxl>=3.1.0",
+    "python-dotenv>=1.0.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/gxf1212/ACS_crawler"
+Documentation = "https://acs-crawler.readthedocs.io/"
+Repository = "https://github.com/gxf1212/ACS_crawler"
+Issues = "https://github.com/gxf1212/ACS_crawler/issues"
+Changelog = "https://github.com/gxf1212/ACS_crawler/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [
@@ -37,6 +64,10 @@ build-backend = "setuptools.build_backend"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+"acs_crawler" = ["data/*.json"]
+"acs_crawler.api" = ["static/**/*", "templates/*.html"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

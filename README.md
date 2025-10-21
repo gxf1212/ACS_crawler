@@ -47,6 +47,11 @@ docker compose down
 # Install dependencies
 pip install -r requirements.txt
 
+# (Optional) Configure ChromeDriver path
+# Copy .env.example to .env and set CHROMEDRIVER_PATH if needed
+cp .env.example .env
+# Edit .env to set your ChromeDriver path (Windows users especially)
+
 # Run the application
 python run.py
 
@@ -54,12 +59,42 @@ python run.py
 http://localhost:8000
 ```
 
+**Option 3: Install from PyPI** (Coming soon)
+
+```bash
+pip install acs-crawler
+
+# Run the web interface
+python -m uvicorn acs_crawler.api.main:app --host 0.0.0.0 --port 8000
+```
+
 ### Requirements
 
 - **Docker**: 20.10+ (for Docker installation), OR
 - **Python**: 3.9+ (for local installation)
 - **Chrome browser**: Latest stable version
-- **ChromeDriver**: Auto-downloaded by webdriver-manager
+- **ChromeDriver**: Auto-downloaded by webdriver-manager (or configure manually)
+
+### Configuration
+
+**ChromeDriver Path** (Optional)
+
+By default, ChromeDriver is automatically downloaded. If you want to use your own ChromeDriver:
+
+1. Copy `.env.example` to `.env`
+2. Set `CHROMEDRIVER_PATH` to your ChromeDriver executable path
+
+Examples:
+```bash
+# Windows
+CHROMEDRIVER_PATH=C:\Program Files\Google\Chrome\Application\chromedriver-win64\chromedriver.exe
+
+# Linux/Mac
+CHROMEDRIVER_PATH=/usr/local/bin/chromedriver
+
+# WSL (Windows path from WSL)
+CHROMEDRIVER_PATH=/mnt/c/Program Files/Google/Chrome/Application/chromedriver-win64/chromedriver.exe
+```
 
 ### Known Limitations
 
