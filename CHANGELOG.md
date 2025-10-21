@@ -43,6 +43,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Type hints and comprehensive logging
 - Test suite with pytest
 
+## [0.1.2] - 2025-10-21
+
+### Fixed
+- Fixed screenshot images not displaying on PyPI by using GitHub absolute URLs
+- Screenshots now use `https://raw.githubusercontent.com` URLs for proper display
+
 ## [0.1.1] - 2025-10-21
 
 ### Added

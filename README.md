@@ -127,16 +127,16 @@ Or read online: [Documentation](https://acs-crawler.readthedocs.io/)
 
 <div align="center">
 
-![Dashboard](screenshots/index.png)
+![Dashboard](https://raw.githubusercontent.com/gxf1212/ACS_crawler/main/screenshots/index.png)
 *Dashboard with statistics and charts*
 
-![Papers](screenshots/papers.png)
+![Papers](https://raw.githubusercontent.com/gxf1212/ACS_crawler/main/screenshots/papers.png)
 *Advanced paper filtering*
 
-![Paper Detail](screenshots/paper_detail.png)
+![Paper Detail](https://raw.githubusercontent.com/gxf1212/ACS_crawler/main/screenshots/paper_detail.png)
 *Detailed paper view*
 
-![Jobs](screenshots/jobs.png)
+![Jobs](https://raw.githubusercontent.com/gxf1212/ACS_crawler/main/screenshots/jobs.png)
 *Job management with cancellation*
 
 </div>
@@ -235,16 +235,16 @@ make html
 
 <div align="center">
 
-![仪表板](screenshots/index.png)
+![仪表板](https://raw.githubusercontent.com/gxf1212/ACS_crawler/main/screenshots/index.png)
 *带统计和图表的仪表板*
 
-![论文](screenshots/papers.png)
+![论文](https://raw.githubusercontent.com/gxf1212/ACS_crawler/main/screenshots/papers.png)
 *高级论文过滤*
 
-![论文详情](screenshots/paper_detail.png)
+![论文详情](https://raw.githubusercontent.com/gxf1212/ACS_crawler/main/screenshots/paper_detail.png)
 *详细的论文视图*
 
-![任务](screenshots/jobs.png)
+![任务](https://raw.githubusercontent.com/gxf1212/ACS_crawler/main/screenshots/jobs.png)
 *带取消功能的任务管理*
 
 </div>
