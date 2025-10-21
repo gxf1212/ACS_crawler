@@ -1,0 +1,22 @@
+# Include documentation and metadata files
+include README.md
+include LICENSE
+include requirements.txt
+include CHANGELOG.md
+
+# Include package data files
+recursive-include src/acs_crawler/data *.json
+
+# Include web interface static files and templates
+recursive-include src/acs_crawler/api/static *
+recursive-include src/acs_crawler/api/templates *.html
+
+# Exclude development and test files
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude __pycache__
+global-exclude .git*
+global-exclude .DS_Store
+recursive-exclude tests *
+recursive-exclude docs *
+recursive-exclude Archive *

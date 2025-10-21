@@ -87,7 +87,16 @@ Docker 提供了一个隔离的、可重现的环境，Chrome、ChromeDriver 和
 
 **Chrome 浏览器**
 
-* Ubuntu/Debian: ``sudo apt install google-chrome-stable``
+* Ubuntu/Debian::
+
+    # 下载并安装 Chrome
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo dpkg -i google-chrome-stable_current_amd64.deb
+    sudo apt-get install -f  # 修复依赖问题（如有）
+
+    # 验证安装
+    google-chrome --version
+
 * macOS: ``brew install --cask google-chrome``
 * Windows: 从 https://www.google.com/chrome/ 下载
 
@@ -145,9 +154,17 @@ Ubuntu/Debian
 
     # 系统包
     sudo apt update
-    sudo apt install python3.9 python3-pip google-chrome-stable
+    sudo apt install python3.9 python3-pip wget
 
-    # 无头服务器
+    # 安装 Chrome 浏览器
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo dpkg -i google-chrome-stable_current_amd64.deb
+    sudo apt-get install -f  # 修复依赖问题
+
+    # 验证 Chrome 安装
+    google-chrome --version
+
+    # 无头服务器（可选）
     sudo apt install xvfb
 
 **安装 Conda/Mamba**::

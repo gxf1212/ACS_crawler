@@ -22,78 +22,36 @@ A professional web-based crawler for American Chemical Society (ACS) papers with
 
 ----
 
-Quick Links / 快速链接
-----------------------
-
-.. grid:: 1 2 2 3
-   :gutter: 2
-
-   .. grid-item::
-
-      .. button-link:: https://github.com/gxf1212/ACS_crawler
-         :color: primary
-         :outline:
-         :expand:
-
-         :octicon:`mark-github` GitHub
-
-   .. grid-item::
-
-      .. button-link:: https://github.com/gxf1212/ACS_crawler/issues
-         :color: danger
-         :outline:
-         :expand:
-
-         :octicon:`issue-opened` Issues
-
-   .. grid-item::
-
-      .. button-link:: https://github.com/gxf1212/ACS_crawler/discussions
-         :color: info
-         :outline:
-         :expand:
-
-         :octicon:`comment-discussion` Discuss
-
-----
-
-Getting Started / 快速开始
---------------------------
-
 .. grid:: 2
    :gutter: 3
 
-   .. grid-item-card:: :octicon:`rocket` Quick Start / 快速开始
+   .. grid-item-card:: 🚀 Quick Start / 快速开始
       :link: en/quickstart
       :link-type: doc
-      :class-title: sd-text-center
 
       Get started in minutes with installation and your first crawl job.
 
       几分钟内完成安装并开始第一个爬取任务。
 
-   .. grid-item-card:: :octicon:`browser` Web Interface / Web 界面
+   .. grid-item-card:: 🖥️ Web Interface / Web 界面
       :link: en/web_usage
       :link-type: doc
-      :class-title: sd-text-center
 
       Learn how to use the dashboard, browse papers, and manage jobs.
 
       学习如何使用仪表板、浏览论文和管理任务。
 
-   .. grid-item-card:: :octicon:`download` Installation / 安装
+   .. grid-item-card:: 🛠️ Installation / 安装
       :link: en/installation
       :link-type: doc
-      :class-title: sd-text-center
 
       Detailed setup instructions for different environments.
 
       不同环境下的详细安装说明。
 
-   .. grid-item-card:: :octicon:`plug` API Usage / API 使用
+   .. grid-item-card:: 🔌 API Usage / API 使用
       :link: en/api_usage
       :link-type: doc
-      :class-title: sd-text-center
 
       Programmatic access with REST API and Python examples.
 
@@ -105,51 +63,66 @@ Features / 功能特性
 .. grid:: 1 2 2 3
    :gutter: 2
 
-   .. grid-item-card:: :octicon:`book` 43 Built-in Journals
-      :class-title: sd-text-center
+   .. grid-item-card:: 📚 43 Built-in Journals / 43 个内置期刊
 
-      Pre-configured ACS journal list
+      Pre-configured ACS journal list ready to use
 
-      43 个内置期刊
+      预配置的 ACS 期刊列表
 
-   .. grid-item-card:: :octicon:`zap` Real-time Crawling
-      :class-title: sd-text-center
+   .. grid-item-card:: ⚡ Real-time Crawling / 实时爬取
 
-      Extract papers instantly
+      Extract papers from ACS Publications instantly
 
-      实时爬取
+      即时从 ACS Publications 提取论文
 
-   .. grid-item-card:: :octicon:`search` Complete Metadata
-      :class-title: sd-text-center
+   .. grid-item-card:: 🔍 Complete Metadata / 完整元数据
 
-      Title, DOI, authors, more
+      Title, DOI, authors, abstract, keywords, citations
 
-      完整元数据
+      标题、DOI、作者、摘要、关键词、引用
 
-   .. grid-item-card:: :octicon:`graph` Modern Dashboard
-      :class-title: sd-text-center
+   .. grid-item-card:: 📊 Modern Dashboard / 现代化仪表板
 
-      Interactive charts
+      Interactive charts and statistics
 
-      现代化仪表板
+      交互式图表和统计
 
-   .. grid-item-card:: :octicon:`filter` Advanced Filtering
-      :class-title: sd-text-center
+   .. grid-item-card:: 🎯 Advanced Filtering / 高级过滤
 
-      Search by multiple fields
+      Search by title, author, journal, year
 
-      高级过滤
+      按标题、作者、期刊、年份搜索
 
-   .. grid-item-card:: :octicon:`sync` Background Jobs
-      :class-title: sd-text-center
+   .. grid-item-card:: 🔄 Background Jobs / 后台任务
 
-      Async with progress
+      Async crawling with progress tracking
 
-      后台任务
+      异步爬取，进度追踪
+
+Quick Links / 快速链接
+----------------------
+
+.. button-link:: https://github.com/gxf1212/ACS_crawler
+   :color: primary
+   :outline:
+
+   :octicon:`mark-github` View on GitHub / 查看 GitHub
+
+.. button-link:: https://github.com/gxf1212/ACS_crawler/issues
+   :color: secondary
+   :outline:
+
+   :octicon:`issue-opened` Report Issues / 报告问题
+
+.. button-link:: https://github.com/gxf1212/ACS_crawler/discussions
+   :color: secondary
+   :outline:
+
+   :octicon:`comment-discussion` Discussions / 讨论
 
 ----
 
-.. admonition:: :octicon:`law` License & Usage / 许可证与使用
+.. admonition:: License & Usage / 许可证与使用
    :class: tip
 
    This software is for **educational and research purposes only**. Users are responsible for complying with ACS Terms of Service.

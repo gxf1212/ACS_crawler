@@ -87,7 +87,16 @@ Step 1: Install Prerequisites
 
 **Chrome Browser**
 
-* Ubuntu/Debian: ``sudo apt install google-chrome-stable``
+* Ubuntu/Debian::
+
+    # Download and install Chrome
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo dpkg -i google-chrome-stable_current_amd64.deb
+    sudo apt-get install -f  # Fix dependencies if needed
+
+    # Verify installation
+    google-chrome --version
+
 * macOS: ``brew install --cask google-chrome``
 * Windows: Download from https://www.google.com/chrome/
 
@@ -145,9 +154,17 @@ Ubuntu/Debian
 
     # System packages
     sudo apt update
-    sudo apt install python3.9 python3-pip google-chrome-stable
+    sudo apt install python3.9 python3-pip wget
 
-    # For headless servers
+    # Install Chrome browser
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo dpkg -i google-chrome-stable_current_amd64.deb
+    sudo apt-get install -f  # Fix any dependency issues
+
+    # Verify Chrome installation
+    google-chrome --version
+
+    # For headless servers (optional)
     sudo apt install xvfb
 
 **Install Conda/Mamba**::
