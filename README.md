@@ -59,10 +59,10 @@ python run.py
 http://localhost:8000
 ```
 
-**Option 3: Install from PyPI** (Coming soon)
+**Option 3: Install from PyPI**
 
 ```bash
-pip install acs-crawler
+pip install acs_crawler
 
 # Run the web interface
 python -m uvicorn acs_crawler.api.main:app --host 0.0.0.0 --port 8000

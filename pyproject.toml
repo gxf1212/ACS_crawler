@@ -1,6 +1,6 @@
 [project]
-name = "acs-crawler"
-version = "0.1.2"
+name = "acs_crawler"
+version = "0.1.3"
 description = "A professional crawler for American Chemical Society papers with modern web dashboard"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -46,6 +46,7 @@ Documentation = "https://acs-crawler.readthedocs.io/"
 Repository = "https://github.com/gxf1212/ACS_crawler"
 Issues = "https://github.com/gxf1212/ACS_crawler/issues"
 Changelog = "https://github.com/gxf1212/ACS_crawler/blob/main/CHANGELOG.md"
+PyPI = "https://pypi.org/project/acs_crawler/"
 
 [project.optional-dependencies]
 dev = [
